@@ -77,8 +77,19 @@ All sources below were checked directly on 2026-09-28.
 | [CDC heat health](https://www.cdc.gov/heat-health/about/index.html) | "Carry a water bottle. Drink and refill it throughout the day." | No clothing guidance |
 | [NWS wind chill](https://www.weather.gov/safety/cold-wind-chill-chart) | Wind chill is defined at ≤50°F with wind >3 mph; frostbite needs an actual air temperature below freezing | No clothing guidance |
 | [CDC winter weather](https://www.cdc.gov/winter-weather/prevention/index.html) | Cold outfit: hat, scarf, gloves, water-resistant coat and boots, loose layers | — |
+| [WCAG 2.2](https://www.w3.org/TR/WCAG22/) (checked 2026-10-05) | Target AA. **1.1.1** (A): text alternatives for images, so each character image needs alt text describing the outfit. **1.4.3** (AA): text contrast 4.5:1, or 3:1 for large text, which matters for text over the 3D scenes. **1.4.11** (AA): controls and meaningful graphics 3:1. **2.2.2** (A): moving content that starts automatically, lasts over 5 s, and sits beside other content needs a way to pause, stop, or hide it, which **applies to the looping animated icons**. **2.5.8** (AA): targets at least 24×24 CSS px (2.5.5 AAA: 44×44, a better one-handed phone goal). **1.4.10** (AA): reflow at 320 px wide with no two-way scrolling | Guidelines, not a test suite; manual checks still needed |
+| [MDN prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) | Detects the device's reduce-motion setting (`reduce` / `no-preference`); widely supported since 2020. Use it to swap in the static icons | Only covers users who have set it, so 2.2.2 still needs an in-app pause control |
+| [MDN Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) | HTTPS only (GitHub Pages qualifies); the browser always asks permission; denial is reported to an error callback (`PERMISSION_DENIED`), which drives the brief's denied-location state | Permission may be remembered by the browser; the app can't re-prompt after a denial |
+| [Open-Meteo terms/privacy](https://open-meteo.com/en/terms) | No cookies or tracking; no data shared with third parties; free use collects no personal data. May log IP addresses for maintenance and abuse prevention | Coordinates and IP still reach Open-Meteo, so the info screen should say so |
+| [Google Terms of Service](https://policies.google.com/terms) | On generated content: "Google won't claim ownership over that content." Users must not violate others' IP rights or use outputs to train AI models | Doesn't address copyright status |
+| [Gemini with a school account](https://support.google.com/gemini/answer/14620100?hl=en&co=DASHER._Family%3DEducation) | Developer's UT Edu account: Education editions get enterprise data protections (chats not human-reviewed or used for training) | The school's admin settings may add limits |
+| [US Copyright Office, AI](https://www.copyright.gov/ai/) | Its 2025 report concludes that output from prompts alone generally isn't copyrightable | **Note for the Client:** a brand can't own exclusive rights to these images as-is; fine for a prototype, but worth flagging |
 
-**Gaps to discuss:** no authoritative source defines temperature bands for everyday outfits (e.g., "hoodie weather"), so the category thresholds below are design judgments based on apparent temperature and should be labeled that way on the info screen. Still needed: accessibility sources (WCAG 2.2 contrast/target size, prefers-reduced-motion) and a privacy approach (location stays on the device; only coordinates are sent to the provider).
+**Gaps to discuss:** no authoritative source defines temperature bands for everyday outfits (e.g., "hoodie weather"), so the category thresholds below are design judgments based on apparent temperature and should be labeled that way on the info screen.
+
+**Privacy approach (confirmed by Developer, 2026-10-05):** no accounts, cookies, analytics, or API keys. Device location is requested only when the User taps "Use my location," never on load. Only latitude/longitude (or the typed city/ZIP) is sent to Open-Meteo. Per the brief, only the most recent location is saved, in the browser's `localStorage`, with a "forget location" control. Saved outfit/wording picks per date are stored the same way and hold no personal data. The info screen states all of this, plus Open-Meteo's IP logging.
+
+**Art credit (confirmed by Developer, 2026-10-05; creator name still to fill in):** "Character and outfit images generated with Google Gemini (Nano Banana 2) by [Developer]. Weather icons: Meteocons by Bas Milius, MIT License." No disclosure is required by Google's terms, but labeling AI images is honest and fits the brief's credits requirement.
 
 ## Decisions
 
@@ -150,13 +161,14 @@ Categories, bands, and pieces confirmed by the Developer. The 90°F breakpoint a
 
 Record new evidence or changed decisions and explain why they changed.
 
+- **2026-10-05, after approval:** added accessibility (WCAG 2.2, prefers-reduced-motion), location/privacy (Geolocation API, Open-Meteo), and AI-art terms (Google ToS, Gemini Education, US Copyright Office) sources, plus a proposed privacy approach and art credit. New finding: WCAG 2.2.2 means the looping animated icons need a pause control.
 - **2026-10-05, art approach:** moved from original layered SVG to AI-generated art in Gemini (3D character images with campus backgrounds; 2D flat-lay fits on white). The Developer preferred the richer look and dynamic weather poses; the OpenArt test drifted more and added watermarks; Gemini's lack of transparency is handled by baking the scene into each character image.
 
 ## Approval
 
 The Developer reviews the sources and decisions, corrects this file, and explicitly approves it before specification begins.
 
-**Approved by the Developer in chat on 2026-10-05.** Open at approval, to be resolved in the spec: accessibility sources (WCAG 2.2 contrast and target size, reduced motion), the privacy approach, Gemini's terms for art credits, and the remaining 20 images (Warm 3 through Cold 3).
+**Approved by the Developer in chat on 2026-10-05.** Open at approval, to be resolved in the spec: accessibility sources, the privacy approach, and Gemini's terms for art credits (sources added and privacy approach and art credit confirmed 2026-10-05), and the remaining 20 images (Warm 3 through Cold 3).
 
 ## Saving the transcript
 
