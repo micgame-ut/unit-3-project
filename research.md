@@ -36,6 +36,7 @@ Focus on the need rather than prescribing an interface or feature.
 1. As a college student who is out on campus all day, I want to know what to wear for the whole day's weather before I leave, so that I'm not too hot, too cold, or caught in the rain between classes.
 2. As a student planning ahead, I want to check the weather for an upcoming day, so that I can have the right clothes ready for a trip or event.
 3. As a student who spends hours outside between classes, I want to know what extra things to bring for the day's conditions, so that I'm not caught without protection from rain, sun, or heat.
+4. As a student whose hours outside change from day to day, I want recommendations based only on the time I'll actually be out, so that I'm not dressed for a cool morning I'll miss or a hot afternoon I'll spend indoors.
 
 ## References
 
@@ -163,6 +164,8 @@ Record new evidence or changed decisions and explain why they changed.
 
 - **2026-10-05, after approval:** added accessibility (WCAG 2.2, prefers-reduced-motion), location/privacy (Geolocation API, Open-Meteo), and AI-art terms (Google ToS, Gemini Education, US Copyright Office) sources, plus a proposed privacy approach and art credit. New finding: WCAG 2.2.2 means the looping animated icons need a pause control.
 - **2026-10-05, art approach:** moved from original layered SVG to AI-generated art in Gemini (3D character images with campus backgrounds; 2D flat-lay fits on white). The Developer preferred the richer look and dynamic weather poses; the OpenArt test drifted more and added watermarks; Gemini's lack of transparency is handled by baking the scene into each character image.
+- **2026-10-05, during spec:** added user story 4 (recommendations for only the hours outside) so the "I'm out from ___ to ___" feature traces to a stated need. Approved by the Developer in chat on 2026-10-05.
+- **2026-10-05, during spec (privacy approach):** Open-Meteo has no reverse geocoding, so device location needs a second service to show a city name. The Developer chose [BigDataCloud's free client-side API](https://www.bigdatacloud.com/blog/new-feature-update-free-client-side-reverse-geocoding-api-with-ip-geolocation-fallback) (no key; fair use for the device's own real-time location; the free tier helps improve its IP geolocation data) over [Nominatim](https://operations.osmfoundation.org/policies/nominatim/) (asks not to submit personal data; requires caching). Coordinates are rounded to 2 decimals (~1 km) before being sent to either service. The Developer also chose to save a changed out window on the device. Both update the privacy approach above; the info screen must disclose them.
 
 ## Approval
 
