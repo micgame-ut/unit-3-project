@@ -52,7 +52,7 @@ Draw every proposed screen by hand, in both phone and laptop layouts, on paper, 
 - **Phone order (top to bottom, revised 2026-10-05):** location, character card (See the fit button beside it), out window, day name, weather summary, date picker, then the extra-info box. This differs from the phone sketch, which put the day and date picker at the top.
 - **Phone thumb reach (Developer, 2026-10-05):** tappable controls sit in the lower part of the screen for one-handed use; the date picker moved below the weather summary for this reason. Two deliberate exceptions follow convention: the location search stays at the top, and the info screen's back button stays at the top left.
 - **Icon pause control:** on the frosted card. **Open-Meteo credit:** in the extra-info box.
-- **Laptop:** character card on the left with location under it; right column with weather summary, See the fit, out window, extra info.
+- **Laptop (revised 2026-10-11):** left column with the day name, date picker, and character card; right column with location search at the top, then weather summary, See the fit, out window, extra info. The sketch put location under the card, but there it fell below the fold on a laptop screen, so the Developer moved it to the top of the right column.
 
 **"See the fit":** opens as an overlay over the character; tapping outside the box closes it.
 

@@ -146,7 +146,8 @@ button { cursor: pointer; font-weight: 600; }
 .pause-btn[aria-pressed="true"] .pause-glyph { display: none; }
 .pause-btn[aria-pressed="true"] .play-glyph { display: block; }
 
-.fit-btn { width: 100%; margin-top: 8px; background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.area-fit { margin-top: -8px; } /* sits close under the card on phone */
+.fit-btn { width: 100%; background: var(--accent); color: var(--on-accent); border-color: transparent; }
 .fit-btn[hidden] { display: none; }
 
 /* ---------- Out window ---------- */
@@ -243,3 +244,64 @@ select {
 .credit a { display: inline-block; padding: 12px 0; margin: -12px 0; }
 .credit { line-height: 2.75; }
 .link-btn { border: 0; background: none; padding: 0; text-decoration: underline; }
+
+/* ---------- Laptop: two columns (spec.md Screen designs) ----------
+   Left: day, date picker, character card.
+   Right: location (moved from under the card so it's visible without scrolling,
+   Developer 2026-10-11), weather summary, See the fit, out window, extra info. */
+@media (min-width: 900px) {
+  .main-screen {
+    max-width: 1080px;
+    display: grid;
+    /* Left column width follows screen height so day, dates, and the whole 2:3 card
+       fit on one screen (230px = day + date picker + padding) */
+    grid-template-columns: clamp(300px, calc((100vh - 230px) * 0.67), 440px) minmax(0, 1fr);
+    grid-template-areas:
+      "day       location"
+      "dates     location"
+      "character weather"
+      "character fit"
+      "character window"
+      "character extra";
+    grid-template-rows: auto auto auto auto auto 1fr;
+    column-gap: 40px;
+    row-gap: var(--gap);
+    align-items: start;
+    padding: 32px var(--gap);
+  }
+  .area-day { grid-area: day; text-align: left; }
+  .area-dates { grid-area: dates; }
+  .area-character { grid-area: character; }
+  .area-location { grid-area: location; }
+  .area-weather { grid-area: weather; }
+  .area-fit { grid-area: fit; margin-top: 0; }
+  .area-window { grid-area: window; }
+  .area-extra { grid-area: extra; }
+
+  .day-name { font-size: 3rem; }
+  .window-row { justify-content: flex-start; font-size: 1.1rem; }
+  .fit-btn { font-size: 1.1rem; min-height: 52px; }
+  .panel { padding: 18px 20px; }
+  .panel-heading { font-size: 1.2rem; }
+
+  /* The larger screen fits all 7 days without scrolling */
+  .date-list { overflow-x: visible; }
+
+  /* Both columns share grid rows, so an in-flow pick list would push the card down.
+     On laptop it floats under the search box instead. */
+  .area-location { position: relative; }
+  .place-list {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    z-index: 5;
+    margin-top: 4px;
+    padding: 8px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  }
+}

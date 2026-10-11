@@ -115,6 +115,22 @@ el.searchForm.addEventListener('submit', async event => {
   }
 });
 
+// The pick list floats on laptop, so close it on Esc or a click outside the location area
+function dismissPlaceList() {
+  if (el.placeList.hidden) return;
+  hidePlaceList();
+  showMessage('');
+}
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !el.placeList.hidden) {
+    dismissPlaceList();
+    el.searchInput.focus();
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.area-location')) dismissPlaceList();
+});
+
 // ---------- Device location (req. 3): only on tap ----------
 el.locateBtn.addEventListener('click', async () => {
   hidePlaceList();
