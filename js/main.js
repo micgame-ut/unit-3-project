@@ -5,6 +5,7 @@ import { searchPlaces, nameFromCoords, fetchForecast, deviceCoords, ServiceError
 import * as storage from './storage.js';
 import { picksFor, withoutPastDates } from './variation.js';
 import { buildState, sampleState, forecastDates, localNow } from './state.js';
+import { render, onMotionPreferenceChange } from './render.js';
 
 const app = {
   location: null,     // { name, lat, lon }
@@ -12,6 +13,7 @@ const app = {
   dateIndex: 0,       // 0 = today ... 6
   usualWindow: storage.load(storage.KEYS.window), // saved { start, end } or null
   state: sampleState(),
+  iconsPaused: false, // icon pause control (req. 16); not saved
 };
 
 const el = {
@@ -48,17 +50,11 @@ function refresh() {
       dateIndex: app.dateIndex, usualWindow: app.usualWindow, picks: result.picks,
     });
   }
-  render(app.state);
+  draw();
 }
 
-/** Temporary renderer until checkpoint 5: character image only. */
-function render(state) {
-  const img = document.getElementById('character-img');
-  if (state.outfit) {
-    img.src = state.outfit.character;
-    img.alt = state.outfit.alt;
-  }
-  console.info('[app] state', state);
+function draw() {
+  render(app.state, { paused: app.iconsPaused });
 }
 
 function hidePlaceList() {
@@ -143,6 +139,13 @@ el.locateBtn.addEventListener('click', async () => {
     showMessage("Couldn't name your location. Search for your city instead.");
   }
 });
+
+// ---------- Icon animation (req. 16) ----------
+document.getElementById('pause-btn').addEventListener('click', () => {
+  app.iconsPaused = !app.iconsPaused;
+  draw();
+});
+onMotionPreferenceChange(draw);
 
 // ---------- Start: restore the saved location (req. 4) ----------
 const saved = storage.load(storage.KEYS.location);

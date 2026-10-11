@@ -77,7 +77,9 @@ button { cursor: pointer; font-weight: 600; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 /* ---------- Location ---------- */
-.area-location { display: grid; gap: 8px; }
+/* Columns can shrink below their content's natural width (no sideways scroll at 320px, req. 14) */
+.main-screen > * { min-width: 0; }
+.area-location { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 .location-name { margin: 0; font-size: 1.25rem; font-weight: 700; }
 .location-name:empty { display: none; }
 .search-form { display: flex; gap: 8px; }
@@ -87,6 +89,7 @@ button { cursor: pointer; font-weight: 600; }
 .place-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .place-list button { width: 100%; text-align: left; }
 
+/* ---------- Character card ---------- */
 .character-card {
   position: relative;
   margin: 0;
@@ -94,3 +97,83 @@ button { cursor: pointer; font-weight: 600; }
   overflow: hidden;
   background: var(--surface);
 }
+
+/* Sits where the icon card would be (the card is hidden in the sample state) */
+.sample-label {
+  position: absolute;
+  bottom: 12px; left: 12px; right: 12px;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--frost);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Frosted card over the lower part of the scene keeps icon and text readable */
+.icon-card {
+  position: absolute;
+  left: 12px; right: 12px; bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--frost);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.icon-card[hidden] { display: none; }
+.weather-icon { width: 64px; height: 64px; flex: none; }
+.icon-card-text { display: grid; flex: 1; min-width: 0; }
+.icon-word { font-size: 1.15rem; font-weight: 700; }
+.icon-category { color: var(--text-muted); font-weight: 600; }
+.pause-btn {
+  flex: none;
+  width: var(--tap);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+.pause-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.pause-btn .play-glyph { display: none; }
+.pause-btn[aria-pressed="true"] .pause-glyph { display: none; }
+.pause-btn[aria-pressed="true"] .play-glyph { display: block; }
+
+/* ---------- Day ---------- */
+.area-day { text-align: center; }
+.day-name { margin: 0; font-size: 2.25rem; line-height: 1.1; letter-spacing: -0.01em; }
+.day-date { margin: 4px 0 0; color: var(--text-muted); font-weight: 600; }
+.day-date:empty { display: none; }
+
+/* ---------- Panels: weather summary and extra info ---------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.panel[hidden] { display: none; }
+.panel-heading { margin: 0 0 8px; font-size: 1.05rem; }
+.units { color: var(--text-muted); font-weight: 600; }
+
+.weather-line { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; padding: 6px 0; }
+.weather-line[hidden] { display: none; }
+.line-label { font-weight: 700; min-width: 4.5rem; }
+.line-icon { width: 32px; height: 32px; }
+.source { margin: 6px 0 0; color: var(--text-muted); font-size: 0.9rem; }
+
+.summary-text { margin: 0 0 10px; }
+.summary-text:empty { display: none; }
+.reminder-list { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 8px; }
+.reminder-list li { display: flex; align-items: center; gap: 10px; }
+.reminder-list img { width: 40px; height: 40px; flex: none; }
+.credit { margin: 0 0 8px; color: var(--text-muted); font-size: 0.9rem; }
+.credit a, .link-btn { color: var(--accent); }
+/* Taller hit area for the credit links without changing the line's look (req. 15) */
+.credit a { display: inline-block; padding: 12px 0; margin: -12px 0; }
+.credit { line-height: 2.75; }
+.link-btn { border: 0; background: none; padding: 0; text-decoration: underline; }

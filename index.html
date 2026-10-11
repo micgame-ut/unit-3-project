@@ -27,7 +27,18 @@
     <section class="area-character" aria-label="Outfit">
       <figure class="character-card">
         <img id="character-img" src="img/warm-1-character.jpg" alt="" width="640" height="954">
-        <!-- Checkpoint 5: frosted icon card with pause control -->
+        <p id="sample-label" class="sample-label" hidden>Sample outfit: search a city to get yours</p>
+        <div id="icon-card" class="icon-card" hidden>
+          <img id="weather-icon" class="weather-icon" src="" alt="" width="72" height="72">
+          <div class="icon-card-text">
+            <span id="icon-word" class="icon-word"></span>
+            <span id="icon-category" class="icon-category"></span>
+          </div>
+          <button id="pause-btn" class="pause-btn" type="button" aria-pressed="false" aria-label="Pause icon animation">
+            <svg class="pause-glyph" viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+            <svg class="play-glyph" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3l12 7-12 7z"/></svg>
+          </button>
+        </div>
       </figure>
       <!-- Checkpoint 6: See the fit button -->
     </section>
@@ -37,20 +48,41 @@
     </section>
 
     <section class="area-day" aria-label="Selected day">
-      <!-- Checkpoint 5: day name and date -->
+      <h1 id="day-name" class="day-name">Fit Check Weather</h1>
+      <p id="day-date" class="day-date"></p>
     </section>
 
-    <section class="area-weather" aria-label="Weather">
-      <!-- Checkpoint 5: Now and Forecast lines -->
+    <section id="weather-box" class="area-weather panel" aria-labelledby="weather-heading" hidden>
+      <h2 id="weather-heading" class="panel-heading">Weather <span class="units">°F</span></h2>
+      <div id="now-line" class="weather-line">
+        <span class="line-label">Now</span>
+        <img id="now-icon" class="line-icon" src="" alt="" width="40" height="40">
+        <span id="now-text"></span>
+      </div>
+      <div class="weather-line">
+        <span id="forecast-label" class="line-label">Forecast</span>
+        <span id="forecast-text"></span>
+      </div>
+      <p class="source">Weather: Open-Meteo</p>
     </section>
 
     <section class="area-dates" aria-label="Choose a date">
       <!-- Checkpoint 6: date picker -->
     </section>
 
-    <section class="area-extra" aria-label="Recommendation and reminders">
-      <!-- Checkpoint 5: written recommendation, reminders, Open-Meteo credit, info link -->
+    <section class="area-extra panel" aria-labelledby="extra-heading">
+      <h2 id="extra-heading" class="panel-heading">What to wear and bring</h2>
+      <p id="summary-text" class="summary-text"></p>
+      <ul id="reminder-list" class="reminder-list"></ul>
+      <p class="credit">
+        <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
+        (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)
+      </p>
+      <button id="info-btn" class="link-btn" type="button">About, privacy &amp; credits</button>
     </section>
+
+    <!-- Announces each new recommendation to screen readers (req. 16) -->
+    <p id="announcer" class="visually-hidden" aria-live="polite"></p>
   </main>
 
   <!-- Info screen, shown in place of the main screen (checkpoint 9) -->
