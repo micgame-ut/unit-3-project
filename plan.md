@@ -66,8 +66,8 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 ### Build
 
 - [ ] Create or source the assets listed in `spec.md`, starting early (22 of 30 images done; Cool 3 and Cold 1–3 remain)
-- [ ] **1. Scaffold:** `index.html`, CSS tokens, module files, `serve.ps1`, and `compress-images.ps1`. *Result:* the page loads at localhost with the compressed images in `img/`.
-- [ ] **2. Rules engine:** `rules.js` (out window, category, reminders, window icon) and the browser test page. *Result:* every boundary case in req. 8 and 10 passes on `tests.html`.
+- [x] **1. Scaffold:** `index.html`, CSS tokens, module files, `serve.ps1`, and `compress-images.ps1`. *Result:* the page loads at localhost with the compressed images in `img/`. *Verified by Developer, 2026-10-11.*
+- [x] **2. Rules engine:** `rules.js` (out window, category, reminders, window icon) and the browser test page. *Result:* every boundary case in req. 8 and 10 passes on `tests.html`. *Verified by Developer, 2026-10-11 (52 of 52 tests pass).*
 - [ ] **3. Location and weather data:** US-only search with a pick list, "Use my location" with rounding and BigDataCloud naming, the Open-Meteo forecast request, and the saved last location. *Result:* req. 1–4 checks pass in the network and storage panels.
 - [ ] **4. Recommendation state and variation:** `state.js` and `variation.js`, with picks saved per date and past dates cleared. *Result:* reloading or revisiting a date shows the same outfit and wordings; new dates vary independently.
 - [ ] **5. Main screen, phone:** character card, frosted icon card with pause, day name, Now and Forecast lines, reminders, written recommendation, Open-Meteo credit, all drawn from the state. *Result:* req. 6, 7, and 14 (phone) pass at 320px and 390px.

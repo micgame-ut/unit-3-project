@@ -22,6 +22,8 @@ State what the app should help its Users accomplish and name the user story or s
 
 > **Approved by the Developer (2026-10-05).**
 
+**App name (Developer, 2026-10-11):** Fit Check Weather.
+
 Help US college students who are out on campus all day decide, before they leave, what to wear and what to bring for the weather during the hours they'll actually be outside. They can do this for today or an upcoming forecast date, quickly and one-handed on a phone, or with more room on a laptop. Recommendations are playful suggestions shown through a dressed character, not safety advice.
 
 Defining user stories (from `research.md`):
