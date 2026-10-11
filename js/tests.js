@@ -6,6 +6,8 @@ import {
   hoursInWindow, hasMissingData, categoryFor, summarize, remindersFor,
   iconForCode, windowIcon,
 } from './rules.js';
+import { newPicks, picksFor, withoutPastDates } from './variation.js';
+import { buildState, sampleState, forecastDates } from './state.js';
 
 const results = [];
 function check(name, actual, expected) {
@@ -117,6 +119,86 @@ const rows = codes => codes.map(code => ({ code }));
 check('most common icon wins', windowIcon(rows([0, 0, 0, 61])), 'clear');
 check('tie goes to the more severe icon', windowIcon(rows([0, 0, 61, 61])), 'rain');
 check('three-way tie goes to storm', windowIcon(rows([0, 95, 3])), 'storm');
+
+// ---------- Variation picks (Content variation) ----------
+// Feeds a fixed sequence instead of Math.random: 0 -> 1, 0.4 -> 2, 0.9 -> 3.
+const sequence = values => { let i = 0; return () => values[i++ % values.length]; };
+
+const first = picksFor({}, '2026-10-12', sequence([0.9, 0, 0.4, 0.9, 0, 0.4]));
+check('new date gets an outfit and 5 wordings',
+  first.picks, { outfit: 3, wording: { umbrella: 1, sunscreen: 2, hydration: 3, bundleUp: 1, swing: 2 } });
+check('new picks are marked changed (to be saved)', first.changed, true);
+const again = picksFor(first.all, '2026-10-12', sequence([0, 0, 0, 0, 0, 0]));
+check('returning to a date gives the same picks', again.picks, first.picks);
+check('returning to a date does not change storage', again.changed, false);
+check('outfit and wordings drawn independently (outfit 3 with wording 1)',
+  [first.picks.outfit, first.picks.wording.umbrella], [3, 1]);
+
+let distinct = new Set();
+for (let i = 0; i < 200; i++) distinct.add(JSON.stringify(newPicks()));
+check('random picks vary across many dates (more than 20 distinct combos in 200)', distinct.size > 20, true);
+
+const stored = { '2026-10-10': first.picks, '2026-10-11': first.picks, '2026-10-12': first.picks };
+check('past dates are dropped on load',
+  Object.keys(withoutPastDates(stored, '2026-10-11').all), ['2026-10-11', '2026-10-12']);
+check('nothing to drop reports unchanged',
+  withoutPastDates({ '2026-10-12': first.picks }, '2026-10-11').changed, false);
+
+// ---------- Recommendation state ----------
+// 7-day fake forecast; "now" is 3pm on day 1. Day 1 afternoons are hot and rainy.
+function fakeForecast() {
+  const hourly = { time: [], apparent_temperature: [], temperature_2m: [],
+    precipitation_probability: [], uv_index: [], weather_code: [] };
+  for (let d = 0; d < 7; d++) {
+    for (let hr = 0; hr < 24; hr++) {
+      hourly.time.push(`2026-10-${String(11 + d).padStart(2, '0')}T${String(hr).padStart(2, '0')}:00`);
+      hourly.apparent_temperature.push(d === 0 ? 70 + hr : 40);
+      hourly.temperature_2m.push(d === 0 ? 68 + hr : 38);
+      hourly.precipitation_probability.push(d === 0 && hr === 16 ? 60 : 0);
+      hourly.uv_index.push(d === 0 && hr < 17 ? 7 : 0);
+      hourly.weather_code.push(d === 0 && hr === 16 ? 61 : 0);
+    }
+  }
+  return { current: { time: '2026-10-11T15:00', temperature_2m: 84, apparent_temperature: 86.4, weather_code: 2 }, hourly };
+}
+const fc = fakeForecast();
+const austinLoc = { name: 'Austin, TX', lat: 30.27, lon: -97.74 };
+const picks = { outfit: 2, wording: { umbrella: 3, sunscreen: 1, hydration: 2, bundleUp: 1, swing: 1 } };
+const today = buildState({ location: austinLoc, forecast: fc, dateIndex: 0, usualWindow: null, picks });
+
+check('forecast has 7 dates', forecastDates(fc).length, 7);
+check('today window at 3pm is 3pm–6pm', today.windowText, '3pm–6pm');
+check('today shows a Now line', today.now, { temp: 84, feels: 86, icon: 'partly', word: 'Partly cloudy' });
+check('window max feels-like 87 → warm', today.category, 'warm');
+check('outfit follows category + picked number', today.outfit.id, 'warm-2');
+check('character and fit images are the same outfit',
+  [today.outfit.character, today.outfit.fit], ['img/warm-2-character.jpg', 'img/warm-2-fit.jpg']);
+check('alt text names the category and outfit', today.outfit.alt.includes('warm weather') && today.outfit.alt.includes('denim overshirt'), true);
+check('reminders use the picked wordings',
+  today.reminders.map(r => [r.type, r.text]),
+  [['umbrella', "Don't get caught in the rain. Grab an umbrella."],
+   ['sunscreen', 'UV is up today. Put on sunscreen before you head out.']]);
+check('window icon: 2 clear hours vs 1 rain → clear', today.icon, 'clear');
+check('summary text uses the same window and category',
+  today.summaryText.startsWith("It'll feel like 85–87°F while you're out (3pm–6pm), so it's a warm day."), true);
+
+const later = buildState({ location: austinLoc, forecast: fc, dateIndex: 3, usualWindow: null, picks });
+check('forecast date has no Now line', later.now, null);
+check('forecast date uses 7am–7pm and its own weather', [later.windowText, later.category], ['7am–7pm', 'cold']);
+check('same outfit number carries to the new category', later.outfit.id, 'cold-2');
+check('Cold image falls back until its art exists', later.outfit.character, 'img/cool-1-character.jpg');
+
+const swingFc = fakeForecast();
+swingFc.hourly.apparent_temperature[15] = 60; // 3pm feels 60, 10pm feels 92: a 32° swing, Hot
+const swingState = buildState({ location: austinLoc, forecast: swingFc, dateIndex: 0, usualWindow: { start: 15, end: 23 }, picks });
+check('swing wording names the outfit layer (Hot 2 linen shirt)',
+  swingState.reminders.find(r => r.type === 'swing')?.text, 'Big temperature swing today. Wear your linen shirt and take it off when it warms up.');
+
+const broken = fakeForecast();
+broken.hourly.apparent_temperature[16] = null;
+check('a null hour in the window gives the missing-data state',
+  buildState({ location: austinLoc, forecast: broken, dateIndex: 0, usualWindow: null, picks }).missing, true);
+check('sample state is Warm 1 with no weather', [sampleState().isSample, sampleState().outfit.id, sampleState().summaryText], [true, 'warm-1', '']);
 
 // ---------- Report ----------
 const failed = results.filter(r => !r.pass);

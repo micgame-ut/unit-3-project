@@ -3,10 +3,15 @@
 
 import { searchPlaces, nameFromCoords, fetchForecast, deviceCoords, ServiceError } from './weather.js';
 import * as storage from './storage.js';
+import { picksFor, withoutPastDates } from './variation.js';
+import { buildState, sampleState, forecastDates, localNow } from './state.js';
 
 const app = {
-  location: null,   // { name, lat, lon }
-  forecast: null,   // Open-Meteo response for app.location
+  location: null,     // { name, lat, lon }
+  forecast: null,     // Open-Meteo response for app.location
+  dateIndex: 0,       // 0 = today ... 6
+  usualWindow: storage.load(storage.KEYS.window), // saved { start, end } or null
+  state: sampleState(),
 };
 
 const el = {
@@ -20,6 +25,40 @@ const el = {
 
 function showMessage(text) {
   el.message.textContent = text;
+}
+
+/**
+ * Rebuilds the recommendation state from the current selections and renders it.
+ * Called after any change to location, date, or window (req. 7).
+ */
+function refresh() {
+  if (!app.forecast) {
+    app.state = sampleState();
+  } else {
+    const today = localNow(app.forecast).date;
+    const date = forecastDates(app.forecast)[app.dateIndex];
+
+    // Picks: drop past dates, then get (or create) this date's picks.
+    const pruned = withoutPastDates(storage.load(storage.KEYS.picks), today);
+    const result = picksFor(pruned.all, date);
+    if (pruned.changed || result.changed) storage.save(storage.KEYS.picks, result.all);
+
+    app.state = buildState({
+      location: app.location, forecast: app.forecast,
+      dateIndex: app.dateIndex, usualWindow: app.usualWindow, picks: result.picks,
+    });
+  }
+  render(app.state);
+}
+
+/** Temporary renderer until checkpoint 5: character image only. */
+function render(state) {
+  const img = document.getElementById('character-img');
+  if (state.outfit) {
+    img.src = state.outfit.character;
+    img.alt = state.outfit.alt;
+  }
+  console.info('[app] state', state);
 }
 
 function hidePlaceList() {
@@ -42,6 +81,7 @@ async function setLocation(place) {
     showMessage("Weather service isn't responding. Try again in a minute.");
     console.warn('[app] forecast failed', err);
   }
+  refresh();
 }
 
 // ---------- Manual search (req. 2) ----------
@@ -107,3 +147,4 @@ el.locateBtn.addEventListener('click', async () => {
 // ---------- Start: restore the saved location (req. 4) ----------
 const saved = storage.load(storage.KEYS.location);
 if (saved) setLocation(saved);
+else refresh();
