@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fit Check Weather</title>
+  <meta name="description" content="What to wear on campus today, based on the live forecast for the hours you're outside.">
+  <link rel="icon" href="art/icons/static/clear-day.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <!-- Main screen. Phone order and laptop columns come from spec.md, Screen designs. -->
+  <main id="main-screen" class="main-screen">
+    <section class="area-location" aria-label="Location">
+      <!-- Checkpoint 3: search form, "Use my location", pick list -->
+    </section>
+
+    <section class="area-character" aria-label="Outfit">
+      <figure class="character-card">
+        <img id="character-img" src="img/warm-1-character.jpg" alt="" width="640" height="954">
+        <!-- Checkpoint 5: frosted icon card with pause control -->
+      </figure>
+      <!-- Checkpoint 6: See the fit button -->
+    </section>
+
+    <section class="area-window" aria-label="Hours outside">
+      <!-- Checkpoint 6: "I'm out from ___ to ___" -->
+    </section>
+
+    <section class="area-day" aria-label="Selected day">
+      <!-- Checkpoint 5: day name and date -->
+    </section>
+
+    <section class="area-weather" aria-label="Weather">
+      <!-- Checkpoint 5: Now and Forecast lines -->
+    </section>
+
+    <section class="area-dates" aria-label="Choose a date">
+      <!-- Checkpoint 6: date picker -->
+    </section>
+
+    <section class="area-extra" aria-label="Recommendation and reminders">
+      <!-- Checkpoint 5: written recommendation, reminders, Open-Meteo credit, info link -->
+    </section>
+  </main>
+
+  <!-- Info screen, shown in place of the main screen (checkpoint 9) -->
+  <section id="info-screen" class="info-screen" hidden></section>
+</body>
+</html>
