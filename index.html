@@ -13,7 +13,15 @@
   <!-- Main screen. Phone order and laptop columns come from spec.md, Screen designs. -->
   <main id="main-screen" class="main-screen">
     <section class="area-location" aria-label="Location">
-      <!-- Checkpoint 3: search form, "Use my location", pick list -->
+      <p id="location-name" class="location-name"></p>
+      <form id="search-form" class="search-form" role="search">
+        <label for="search-input" class="visually-hidden">City or ZIP code</label>
+        <input id="search-input" type="search" placeholder="City or ZIP" autocomplete="off" enterkeyhint="search" required>
+        <button type="submit">Search</button>
+      </form>
+      <button id="locate-btn" class="locate-btn" type="button">Use my location</button>
+      <p id="location-message" class="location-message" role="status"></p>
+      <ul id="place-list" class="place-list" aria-label="Matching places" hidden></ul>
     </section>
 
     <section class="area-character" aria-label="Outfit">

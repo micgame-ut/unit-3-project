@@ -137,7 +137,7 @@ Translate every fixed brief requirement and the selected research-driven feature
 16. **Accessibility (WCAG 2.2 AA).** All controls work by keyboard with a visible focus; the character image has alt text naming the outfit and category; text meets 4.5:1 contrast, including over the scenes; inputs have labels; updates to the recommendation are announced to screen readers; the icon pause control stops animation, and `prefers-reduced-motion` shows the static icons.
     *Check:* keyboard-only run-through; a contrast check; screen-reader spot check; toggle reduced motion.
 17. **Privacy.** No accounts, cookies, analytics, or API keys; only the typed search or rounded coordinates go to Open-Meteo, and rounded coordinates go to BigDataCloud only after "Use my location" is tapped; `localStorage` holds only the last location, per-date picks, and the usual window.
-    *Check:* network panel shows requests only to Open-Meteo, BigDataCloud (after the tap), and the site itself; storage panel shows only those keys.
+    *Check:* network panel shows requests only to Open-Meteo, BigDataCloud (after the tap), and the site itself; storage panel shows only those keys. BigDataCloud's `api.bigdatacloud.net` redirects to its own `api-bdc.io` domain (found 2026-10-11), so both hosts count as BigDataCloud.
 18. **Credits.** Open-Meteo credit in the extra-info box; full credits on the info screen.
     *Check:* both present and matching the wording in Screen designs.
 19. **Deployment.** Deployed to GitHub Pages at a public HTTPS URL.
