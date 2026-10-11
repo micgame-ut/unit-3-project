@@ -71,7 +71,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 - [x] **3. Location and weather data:** US-only search with a pick list, "Use my location" with rounding and BigDataCloud naming, the Open-Meteo forecast request, and the saved last location. *Result:* req. 1–4 checks pass in the network and storage panels. *Verified by Developer, 2026-10-11, including "Use my location."*
 - [x] **4. Recommendation state and variation:** `state.js` and `variation.js`, with picks saved per date and past dates cleared. *Result:* reloading or revisiting a date shows the same outfit and wordings; new dates vary independently. *Verified by Developer, 2026-10-11.*
 - [x] **5. Main screen, phone:** character card, frosted icon card with pause, day name, Now and Forecast lines, reminders, written recommendation, Open-Meteo credit, all drawn from the state. *Result:* req. 6, 7, and 14 (phone) pass at 320px and 390px. *Verified by Developer, 2026-10-11.*
-- [ ] **6. Controls:** date picker (7 dates), out-window control, See the fit overlay. *Result:* req. 5, 10, 11, and 15 pass.
+- [x] **6. Controls:** date picker (7 dates), out-window control, See the fit overlay. *Result:* req. 5, 10, 11, and 15 pass. *Verified by Developer, 2026-10-11.*
 - [ ] **7. Laptop layout:** two columns from 900px up. *Result:* req. 14 passes at 1280px+.
 - [ ] **8. States:** loading sun, error image, location denied, first-visit sample fit, "No US location found." *Result:* each req. 13 state triggers on purpose.
 - [ ] **9. Info screen:** all sections, Forget location, and back without losing state. *Result:* req. 12 and 18 pass.

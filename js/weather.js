@@ -75,7 +75,13 @@ export async function nameFromCoords(lat, lon) {
   const params = new URLSearchParams({ latitude: lat, longitude: lon, localityLanguage: 'en' });
   const data = await getJson(`${REVERSE_URL}?${params}`);
   if (data.countryCode !== 'US') return null;
-  const city = data.city || data.locality;
+  // Outside city limits, `city` holds a census area name (e.g. "Northeast Travis") that isn't
+  // one of the administrative areas; show the county instead (Developer, 2026-10-11).
+  // Real cities sit at different admin levels (NYC 5, Chicago 8), so match by name, not level.
+  const admin = data.localityInfo?.administrative || [];
+  const isRealCity = data.city && admin.some(a => a.name === data.city);
+  const county = admin.find(a => a.adminLevel === 6)?.name;
+  const city = (isRealCity ? data.city : county) || data.city || data.locality;
   const st = (data.principalSubdivisionCode || '').replace('US-', '') || stateCode(data.principalSubdivision);
   return [city, st].filter(Boolean).join(', ');
 }

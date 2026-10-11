@@ -102,7 +102,7 @@ Translate every fixed brief requirement and the selected research-driven feature
    *Check:* "78705" and "Austin" both resolve to Austin, TX; "Paris" lists Paris, TX and other US matches, never France.
 3. **Device location.** "Use my location" requests the browser location only when tapped, never on load.
    *Check:* a fresh load shows no permission prompt; tapping the button does.
-   The coordinates are rounded to 2 decimal places (about 1 km) before leaving the device, then named with BigDataCloud's free client-side reverse-geocoding API (no key) and shown as "City, State." The same rounded coordinates are used for the Open-Meteo request.
+   The coordinates are rounded to 2 decimal places (about 1 km) before leaving the device, then named with BigDataCloud's free client-side reverse-geocoding API (no key) and shown as "City, State." Outside city limits, the county is shown instead, e.g. "Travis County, TX" (Developer, 2026-10-11). The same rounded coordinates are used for the Open-Meteo request.
    *Check:* the network panel shows only 2-decimal coordinates in both requests; the main screen shows the correct city and state.
 4. **Saved location.** Only the most recent location is saved, in `localStorage`, and restored on the next visit. **Forget location** (info screen) clears it and returns the app to the first-visit state.
    *Check:* reload keeps the last location; after Forget location, a reload shows the sample fit.
