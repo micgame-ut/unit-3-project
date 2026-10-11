@@ -40,11 +40,18 @@
           </button>
         </div>
       </figure>
-      <!-- Checkpoint 6: See the fit button -->
+      <button id="fit-btn" class="fit-btn" type="button" hidden>See the fit</button>
     </section>
 
-    <section class="area-window" aria-label="Hours outside">
-      <!-- Checkpoint 6: "I'm out from ___ to ___" -->
+    <section id="window-box" class="area-window" aria-label="Hours outside" hidden>
+      <p class="window-row">
+        <span>I'm out from</span>
+        <label class="visually-hidden" for="window-start">Out from</label>
+        <select id="window-start"></select>
+        <span>to</span>
+        <label class="visually-hidden" for="window-end">Out until</label>
+        <select id="window-end"></select>
+      </p>
     </section>
 
     <section class="area-day" aria-label="Selected day">
@@ -66,8 +73,9 @@
       <p class="source">Weather: Open-Meteo</p>
     </section>
 
-    <section class="area-dates" aria-label="Choose a date">
-      <!-- Checkpoint 6: date picker -->
+    <section id="date-box" class="area-dates" aria-labelledby="dates-heading" hidden>
+      <h2 id="dates-heading" class="visually-hidden">Choose a date</h2>
+      <div id="date-list" class="date-list"></div>
     </section>
 
     <section class="area-extra panel" aria-labelledby="extra-heading">
@@ -84,6 +92,19 @@
     <!-- Announces each new recommendation to screen readers (req. 16) -->
     <p id="announcer" class="visually-hidden" aria-live="polite"></p>
   </main>
+
+  <!-- See the fit (req. 11): closes on tap outside, the close button, or Esc -->
+  <dialog id="fit-dialog" class="fit-dialog" aria-labelledby="fit-title">
+    <div class="fit-box">
+      <div class="fit-header">
+        <h2 id="fit-title" class="fit-title">The fit</h2>
+        <button id="fit-close" class="fit-close" type="button" aria-label="Close">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <img id="fit-img" class="fit-img" src="" alt="" width="640" height="954">
+    </div>
+  </dialog>
 
   <!-- Info screen, shown in place of the main screen (checkpoint 9) -->
   <section id="info-screen" class="info-screen" hidden></section>

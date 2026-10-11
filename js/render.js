@@ -85,11 +85,47 @@ export function render(state, { paused = false } = {}) {
     return li;
   }));
 
+  // See the fit: same outfit as the character (req. 11)
+  $('fit-btn').hidden = false;
+  $('fit-img').src = state.outfit.fit;
+  $('fit-img').alt = `The pieces laid out flat: ${state.outfit.look}.`;
+  $('fit-title').textContent = state.isSample ? 'The sample fit' : `The ${state.categoryLabel.toLowerCase()} fit`;
+
+  // Date picker and out window need a forecast
+  $('date-box').hidden = state.isSample;
+  $('window-box').hidden = state.isSample;
+  if (!state.isSample) {
+    renderDates(state);
+    $('window-start').value = String(state.window.start);
+    $('window-end').value = String(state.window.end);
+  }
+
   // Screen-reader announcement of the new recommendation
   $('announcer').textContent = hasWeather
     ? `${state.categoryLabel} fit for ${dayParts(state.date, state.isToday).weekday}, ${state.windowText}. ` +
       `${state.reminders.length} reminder${state.reminders.length === 1 ? '' : 's'}.`
     : '';
+}
+
+/** 7 day buttons; the selected one has aria-pressed="true". Clicks are handled in main.js. */
+function renderDates(state) {
+  $('date-list').replaceChildren(...state.dates.map((date, i) => {
+    const d = new Date(`${date}T12:00:00`);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'date-btn';
+    button.dataset.index = String(i);
+    button.setAttribute('aria-pressed', String(i === state.dateIndex));
+    button.setAttribute('aria-label', d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + (i === 0 ? ', today' : ''));
+    const weekday = document.createElement('span');
+    weekday.className = 'date-weekday';
+    weekday.textContent = i === 0 ? 'Today' : d.toLocaleDateString('en-US', { weekday: 'short' });
+    const num = document.createElement('span');
+    num.className = 'date-num';
+    num.textContent = String(d.getDate());
+    button.append(weekday, num);
+    return button;
+  }));
 }
 
 /** Re-renders when the system reduced-motion setting changes. */

@@ -6,6 +6,7 @@ import * as storage from './storage.js';
 import { picksFor, withoutPastDates } from './variation.js';
 import { buildState, sampleState, forecastDates, localNow } from './state.js';
 import { render, onMotionPreferenceChange } from './render.js';
+import { hourLabel } from './rules.js';
 
 const app = {
   location: null,     // { name, lat, lon }
@@ -139,6 +140,48 @@ el.locateBtn.addEventListener('click', async () => {
     showMessage("Couldn't name your location. Search for your city instead.");
   }
 });
+
+// ---------- Date picker (req. 5) ----------
+document.getElementById('date-list').addEventListener('click', event => {
+  const button = event.target.closest('.date-btn');
+  if (!button) return;
+  app.dateIndex = Number(button.dataset.index);
+  refresh();
+  // Keep focus on the selected day after the buttons are redrawn
+  document.querySelector(`.date-btn[data-index="${app.dateIndex}"]`)?.focus();
+});
+
+// ---------- Out window (req. 10): any change becomes the saved usual window ----------
+const startSelect = document.getElementById('window-start');
+const endSelect = document.getElementById('window-end');
+for (const select of [startSelect, endSelect]) {
+  for (let hour = 0; hour < 24; hour++) select.add(new Option(hourLabel(hour), String(hour)));
+  select.addEventListener('change', () => {
+    // Change only the field the User touched. The other comes from the saved usual window,
+    // not from today's trimmed display (e.g. usual 9am–5pm shown as 3pm–5pm at 3pm).
+    const base = app.usualWindow || app.state.window;
+    let start = select === startSelect ? Number(startSelect.value) : base.start;
+    let end = select === endSelect ? Number(endSelect.value) : base.end;
+    // A window needs at least one hour; move whichever end wasn't just changed
+    if (start === end) {
+      if (select === startSelect) end = (start + 1) % 24;
+      else start = (end + 23) % 24;
+    }
+    app.usualWindow = { start, end };
+    storage.save(storage.KEYS.window, app.usualWindow);
+    refresh();
+  });
+}
+
+// ---------- See the fit (req. 11) ----------
+const fitDialog = document.getElementById('fit-dialog');
+document.getElementById('fit-btn').addEventListener('click', () => fitDialog.showModal());
+document.getElementById('fit-close').addEventListener('click', () => fitDialog.close());
+// A click on the dialog element itself (not its box) is a click on the backdrop
+fitDialog.addEventListener('click', event => {
+  if (event.target === fitDialog) fitDialog.close();
+});
+// Esc closes <dialog> natively
 
 // ---------- Icon animation (req. 16) ----------
 document.getElementById('pause-btn').addEventListener('click', () => {

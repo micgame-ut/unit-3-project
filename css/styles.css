@@ -5,6 +5,7 @@
   --text: #1f2328;
   --text-muted: #57606a;
   --accent: #c2410c;
+  --on-accent: #ffffff;
   --border: #d8d2c8;
   --frost: rgba(255, 255, 255, 0.72);
   --radius: 16px;
@@ -21,6 +22,7 @@
     --text: #e8e6e3;
     --text-muted: #a3a8b0;
     --accent: #fb923c;
+    --on-accent: #1f2328;
     --border: #3a3f47;
     --frost: rgba(34, 37, 43, 0.72);
   }
@@ -32,6 +34,7 @@
   --text: #e8e6e3;
   --text-muted: #a3a8b0;
   --accent: #fb923c;
+  --on-accent: #1f2328;
   --border: #3a3f47;
   --frost: rgba(34, 37, 43, 0.72);
 }
@@ -142,6 +145,69 @@ button { cursor: pointer; font-weight: 600; }
 .pause-btn .play-glyph { display: none; }
 .pause-btn[aria-pressed="true"] .pause-glyph { display: none; }
 .pause-btn[aria-pressed="true"] .play-glyph { display: block; }
+
+.fit-btn { width: 100%; margin-top: 8px; background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.fit-btn[hidden] { display: none; }
+
+/* ---------- Out window ---------- */
+.area-window[hidden] { display: none; }
+.window-row {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+}
+select {
+  font: inherit;
+  color: inherit;
+  min-height: var(--tap);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 10px;
+}
+
+/* ---------- Date picker: scrolls inside itself when 7 days don't fit ---------- */
+.area-dates[hidden] { display: none; }
+.date-list {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 4px;
+}
+.date-btn {
+  flex: 1 0 44px;
+  min-height: 56px;
+  padding: 4px 2px;
+  display: grid;
+  place-items: center;
+  gap: 0;
+  scroll-snap-align: start;
+}
+.date-weekday { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+.date-num { font-size: 1.15rem; }
+.date-btn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.date-btn[aria-pressed="true"] .date-weekday { color: inherit; }
+
+/* ---------- See the fit overlay ---------- */
+.fit-dialog {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: min(92vw, 440px);
+  width: 100%;
+}
+.fit-dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
+.fit-box { background: #fff; color: #1f2328; border-radius: var(--radius); padding: 12px; }
+.fit-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.fit-title { margin: 0 0 0 4px; font-size: 1.1rem; }
+.fit-close { width: var(--tap); padding: 0; display: grid; place-items: center; background: transparent; color: inherit; border-color: #d8d2c8; }
+.fit-close svg { width: 20px; height: 20px; }
+.fit-img { width: 100%; max-height: 75vh; object-fit: contain; }
 
 /* ---------- Day ---------- */
 .area-day { text-align: center; }
