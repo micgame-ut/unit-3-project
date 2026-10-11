@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rule Tests</title>
+  <style>
+    :root { color-scheme: light dark; --pass: #1a7f37; --fail: #cf222e; }
+    @media (prefers-color-scheme: dark) { :root { --pass: #3fb950; --fail: #f85149; } }
+    body { font-family: system-ui, sans-serif; margin: 16px; background: Canvas; color: CanvasText; }
+    li.pass::marker { color: var(--pass); }
+    li.fail { color: var(--fail); font-weight: 600; }
+    #summary { font-size: 1.25rem; font-weight: 700; }
+  </style>
+  <script type="module" src="js/tests.js"></script>
+</head>
+<body>
+  <h1>Rule tests</h1>
+  <p id="summary">Running…</p>
+  <ol id="results"></ol>
+</body>
+</html>
