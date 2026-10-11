@@ -186,13 +186,25 @@ Define at least three outfit variations for each recommendation category and at 
 
 **Outfits:** 3 per category, 15 in total, one image pair each (`art/<category>-<n>-character.jpg` and `-fit.jpg`). Pieces follow the category table in `research.md`; each variation has its own pose and campus scene.
 
-| Category | Variations | Art status |
+| Variation | Outfit | Art status |
 |---|---|---|
-| Hot | Hot 1, 2, 3 | done |
-| Warm | Warm 1, 2, 3 | 1–2 done, 3 to make |
-| Mild | Mild 1, 2, 3 | to make |
-| Cool | Cool 1, 2, 3 | to make |
-| Cold | Cold 1, 2, 3 | to make |
+| Hot 1 | cream ribbed tank, open palm-print camp-collar shirt, khaki shorts, brown slides, red cap | done |
+| Hot 2 | white tee, open white linen short-sleeve shirt, navy shorts, tan strap sandals, tan cap | done |
+| Hot 3 | gray ribbed tank, open pastel-striped camp-collar shirt, olive shorts, brown sandals, navy cap | done |
+| Warm 1 | white tee, open sage-green short-sleeve button-up, beige chino shorts, white sneakers | done |
+| Warm 2 | navy-and-white striped tee, open light-wash denim overshirt (sleeves rolled), khaki chinos, off-white canvas sneakers | done |
+| Warm 3 | heather-gray tee, open rust-orange short-sleeve button-up, navy chino shorts, white sneakers | done |
+| Mild 1 | white tee, open red-and-black buffalo-plaid flannel, medium-wash jeans, white sneakers | done |
+| Mild 2 | heather-gray long-sleeve tee, open olive shacket, dark-wash jeans, tan suede sneakers | done |
+| Mild 3 | black tee, light-wash denim jacket, khaki cargo pants, gray sneakers | done |
+| Cool 1 | gray hoodie, navy bomber, dark-wash jeans, white sneakers, charcoal beanie | done |
+| Cool 2 | oatmeal hoodie, brown chore coat, black jeans, brown leather boots, mustard beanie | done |
+| Cool 3 | burgundy hoodie, black bomber, light-wash jeans, gray high-tops, navy beanie | to make |
+| Cold 1 | gray sweater, navy puffer, dark jeans, brown water-resistant boots, red knit hat, gray gloves, red scarf | to make |
+| Cold 2 | cream cable-knit sweater, long olive water-resistant parka, black jeans, black waterproof boots, gray pom beanie, black gloves, plaid scarf | to make |
+| Cold 3 | maroon hoodie, black puffer, medium-wash jeans, tan duck boots, navy beanie, navy gloves, mustard scarf | to make |
+
+- Warm 3 through Cold 3 outfits were re-proposed and approved by the Developer on 2026-10-11, since the original 2026-10-05 list wasn't recorded.
 
 **Reminder wording:** 3 per reminder. `{layer}` is replaced with the current outfit's removable outer layer (e.g., "flannel").
 
@@ -228,7 +240,7 @@ List every art and graphical asset: the character, each outfit variation, icons,
 | Info-screen side bars | — | Info screen, laptop | CSS (colors, no image) | Created | — |
 | Site icon (browser tab) | 1 | Browser tab | SVG | Reuses Meteocons `clear-day` | MIT, as above |
 
-- Art status is tracked in Content variation (10 of 30 images made).
+- Art status is tracked in Content variation (22 of 30 images made).
 - Every character image needs alt text naming the outfit and category (requirement 16); it is written when each image is added.
 
 ## Out of scope
