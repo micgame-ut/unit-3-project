@@ -10,87 +10,94 @@
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <!-- Main screen. Phone order and laptop columns come from spec.md, Screen designs. -->
+  <!-- Main screen (spec.md, Screen designs).
+       Source order follows the laptop columns: left (day, dates, character), then right
+       (location, weather, See the fit, out window, extra info). On phone the column wrappers
+       dissolve and CSS `order` shows the phone order. -->
   <main id="main-screen" class="main-screen">
-    <section class="area-location" aria-label="Location">
-      <p id="location-name" class="location-name"></p>
-      <form id="search-form" class="search-form" role="search">
-        <label for="search-input" class="visually-hidden">City or ZIP code</label>
-        <input id="search-input" type="search" placeholder="City or ZIP" autocomplete="off" enterkeyhint="search" required>
-        <button type="submit">Search</button>
-      </form>
-      <button id="locate-btn" class="locate-btn" type="button">Use my location</button>
-      <p id="location-message" class="location-message" role="status"></p>
-      <ul id="place-list" class="place-list" aria-label="Matching places" hidden></ul>
-    </section>
+    <div class="col col-left">
+      <section class="area-day" aria-label="Selected day">
+        <h1 id="day-name" class="day-name">Fit Check Weather</h1>
+        <p id="day-date" class="day-date"></p>
+      </section>
 
-    <section class="area-character" aria-label="Outfit">
-      <figure class="character-card">
-        <img id="character-img" src="img/warm-1-character.jpg" alt="" width="640" height="954">
-        <p id="sample-label" class="sample-label" hidden>Sample outfit: search a city to get yours</p>
-        <div id="icon-card" class="icon-card" hidden>
-          <img id="weather-icon" class="weather-icon" src="" alt="" width="72" height="72">
-          <div class="icon-card-text">
-            <span id="icon-word" class="icon-word"></span>
-            <span id="icon-category" class="icon-category"></span>
+      <section id="date-box" class="area-dates" aria-labelledby="dates-heading" hidden>
+        <h2 id="dates-heading" class="visually-hidden">Choose a date</h2>
+        <div id="date-list" class="date-list"></div>
+      </section>
+
+      <section class="area-character" aria-label="Outfit">
+        <figure class="character-card">
+          <img id="character-img" src="img/warm-1-character.jpg" alt="" width="640" height="954">
+          <p id="sample-label" class="sample-label" hidden>Sample outfit: search a city to get yours</p>
+          <div id="icon-card" class="icon-card" hidden>
+            <img id="weather-icon" class="weather-icon" src="" alt="" width="72" height="72">
+            <div class="icon-card-text">
+              <span id="icon-word" class="icon-word"></span>
+              <span id="icon-category" class="icon-category"></span>
+            </div>
+            <button id="pause-btn" class="pause-btn" type="button" aria-pressed="false" aria-label="Pause icon animation">
+              <svg class="pause-glyph" viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
+              <svg class="play-glyph" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3l12 7-12 7z"/></svg>
+            </button>
           </div>
-          <button id="pause-btn" class="pause-btn" type="button" aria-pressed="false" aria-label="Pause icon animation">
-            <svg class="pause-glyph" viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="3" width="4" height="14" rx="1"/><rect x="12" y="3" width="4" height="14" rx="1"/></svg>
-            <svg class="play-glyph" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3l12 7-12 7z"/></svg>
-          </button>
-        </div>
-      </figure>
-    </section>
-
-    <div class="area-fit">
-      <button id="fit-btn" class="fit-btn" type="button" hidden>See the fit</button>
+        </figure>
+      </section>
     </div>
 
-    <section id="window-box" class="area-window" aria-label="Hours outside" hidden>
-      <p class="window-row">
-        <span>I'm out from</span>
-        <label class="visually-hidden" for="window-start">Out from</label>
-        <select id="window-start"></select>
-        <span>to</span>
-        <label class="visually-hidden" for="window-end">Out until</label>
-        <select id="window-end"></select>
-      </p>
-    </section>
+    <div class="col col-right">
+      <section class="area-location" aria-label="Location">
+        <p id="location-name" class="location-name"></p>
+        <form id="search-form" class="search-form" role="search">
+          <label for="search-input" class="visually-hidden">City or ZIP code</label>
+          <input id="search-input" type="search" placeholder="City or ZIP" autocomplete="off" enterkeyhint="search" required>
+          <button type="submit">Search</button>
+        </form>
+        <button id="locate-btn" class="locate-btn" type="button">Use my location</button>
+        <p id="location-message" class="location-message" role="status"></p>
+        <ul id="place-list" class="place-list" aria-label="Matching places" hidden></ul>
+      </section>
 
-    <section class="area-day" aria-label="Selected day">
-      <h1 id="day-name" class="day-name">Fit Check Weather</h1>
-      <p id="day-date" class="day-date"></p>
-    </section>
+      <section id="weather-box" class="area-weather panel" aria-labelledby="weather-heading" hidden>
+        <h2 id="weather-heading" class="panel-heading">Weather <span class="units">°F</span></h2>
+        <div id="now-line" class="weather-line">
+          <span class="line-label">Now</span>
+          <img id="now-icon" class="line-icon" src="" alt="" width="40" height="40">
+          <span id="now-text"></span>
+        </div>
+        <div class="weather-line">
+          <span id="forecast-label" class="line-label">Forecast</span>
+          <span id="forecast-text"></span>
+        </div>
+        <p class="source">Weather: Open-Meteo</p>
+      </section>
 
-    <section id="weather-box" class="area-weather panel" aria-labelledby="weather-heading" hidden>
-      <h2 id="weather-heading" class="panel-heading">Weather <span class="units">°F</span></h2>
-      <div id="now-line" class="weather-line">
-        <span class="line-label">Now</span>
-        <img id="now-icon" class="line-icon" src="" alt="" width="40" height="40">
-        <span id="now-text"></span>
+      <div class="area-fit">
+        <button id="fit-btn" class="fit-btn" type="button" hidden>See the fit</button>
       </div>
-      <div class="weather-line">
-        <span id="forecast-label" class="line-label">Forecast</span>
-        <span id="forecast-text"></span>
-      </div>
-      <p class="source">Weather: Open-Meteo</p>
-    </section>
 
-    <section id="date-box" class="area-dates" aria-labelledby="dates-heading" hidden>
-      <h2 id="dates-heading" class="visually-hidden">Choose a date</h2>
-      <div id="date-list" class="date-list"></div>
-    </section>
+      <section id="window-box" class="area-window" aria-label="Hours outside" hidden>
+        <p class="window-row">
+          <span>I'm out from</span>
+          <label class="visually-hidden" for="window-start">Out from</label>
+          <select id="window-start"></select>
+          <span>to</span>
+          <label class="visually-hidden" for="window-end">Out until</label>
+          <select id="window-end"></select>
+        </p>
+      </section>
 
-    <section class="area-extra panel" aria-labelledby="extra-heading">
-      <h2 id="extra-heading" class="panel-heading">What to wear and bring</h2>
-      <p id="summary-text" class="summary-text"></p>
-      <ul id="reminder-list" class="reminder-list"></ul>
-      <p class="credit">
-        <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
-        (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)
-      </p>
-      <button id="info-btn" class="link-btn" type="button">About, privacy &amp; credits</button>
-    </section>
+      <section class="area-extra panel" aria-labelledby="extra-heading">
+        <h2 id="extra-heading" class="panel-heading">What to wear and bring</h2>
+        <p id="summary-text" class="summary-text"></p>
+        <ul id="reminder-list" class="reminder-list"></ul>
+        <p class="credit">
+          <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
+          (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)
+        </p>
+        <button id="info-btn" class="link-btn" type="button">About, privacy &amp; credits</button>
+      </section>
+    </div>
 
     <!-- Announces each new recommendation to screen readers (req. 16) -->
     <p id="announcer" class="visually-hidden" aria-live="polite"></p>

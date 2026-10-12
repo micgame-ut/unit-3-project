@@ -80,8 +80,21 @@ button { cursor: pointer; font-weight: 600; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 /* ---------- Location ---------- */
-/* Columns can shrink below their content's natural width (no sideways scroll at 320px, req. 14) */
-.main-screen > * { min-width: 0; }
+/* Phone: the column wrappers dissolve, so every area is one item in a single column,
+   shown in the phone order from spec.md (location, character, See the fit, out window,
+   day, weather, date picker, extra info). */
+.col { display: contents; }
+.area-location { order: 1; }
+.area-character { order: 2; }
+.area-fit { order: 3; }
+.area-window { order: 4; }
+.area-day { order: 5; }
+.area-weather { order: 6; }
+.area-dates { order: 7; }
+.area-extra { order: 8; }
+
+/* Areas can shrink below their content's natural width (no sideways scroll at 320px, req. 14) */
+.main-screen > *, .col > * { min-width: 0; }
 .area-location { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 .location-name { margin: 0; font-size: 1.25rem; font-weight: 700; }
 .location-name:empty { display: none; }
@@ -90,6 +103,7 @@ button { cursor: pointer; font-weight: 600; }
 .location-message { margin: 0; color: var(--accent); }
 .location-message:empty { display: none; }
 .place-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.place-list[hidden] { display: none; }
 .place-list button { width: 100%; text-align: left; }
 
 /* ---------- Character card ---------- */
@@ -250,33 +264,23 @@ select {
    Right: location (moved from under the card so it's visible without scrolling,
    Developer 2026-10-11), weather summary, See the fit, out window, extra info. */
 @media (min-width: 900px) {
+  /* Two independent columns, centered against each other vertically (Developer, 2026-10-11) */
   .main-screen {
     max-width: 1080px;
-    display: grid;
-    /* Left column width follows screen height so day, dates, and the whole 2:3 card
-       fit on one screen (230px = day + date picker + padding) */
-    grid-template-columns: clamp(300px, calc((100vh - 230px) * 0.67), 440px) minmax(0, 1fr);
-    grid-template-areas:
-      "day       location"
-      "dates     location"
-      "character weather"
-      "character fit"
-      "character window"
-      "character extra";
-    grid-template-rows: auto auto auto auto auto 1fr;
-    column-gap: 40px;
-    row-gap: var(--gap);
-    align-items: start;
+    min-height: 100vh;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
     padding: 32px var(--gap);
   }
-  .area-day { grid-area: day; text-align: left; }
-  .area-dates { grid-area: dates; }
-  .area-character { grid-area: character; }
-  .area-location { grid-area: location; }
-  .area-weather { grid-area: weather; }
-  .area-fit { grid-area: fit; margin-top: 0; }
-  .area-window { grid-area: window; }
-  .area-extra { grid-area: extra; }
+  .col { display: flex; flex-direction: column; gap: var(--gap); }
+  .col > * { order: 0; } /* source order inside each column; phone `order` doesn't apply */
+  /* Left column width follows screen height so day, dates, and the whole 2:3 card
+     fit on one screen (230px = day + date picker + padding) */
+  .col-left { flex: 0 0 clamp(300px, calc((100vh - 230px) * 0.67), 440px); }
+  .col-right { flex: 1 1 0; min-width: 0; }
+  .area-day { text-align: left; }
+  .area-fit { margin-top: 0; }
 
   .day-name { font-size: 3rem; }
   .window-row { justify-content: flex-start; font-size: 1.1rem; }
@@ -287,8 +291,8 @@ select {
   /* The larger screen fits all 7 days without scrolling */
   .date-list { overflow-x: visible; }
 
-  /* Both columns share grid rows, so an in-flow pick list would push the card down.
-     On laptop it floats under the search box instead. */
+  /* An in-flow pick list would lengthen the right column and shift both centered
+     columns. On laptop it floats under the search box instead. */
   .area-location { position: relative; }
   .place-list {
     position: absolute;
