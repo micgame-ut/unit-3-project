@@ -36,6 +36,7 @@ const status = {
   text: document.getElementById('status-text'),
   retry: document.getElementById('retry-btn'),
   today: document.getElementById('today-btn'),
+  changeLocation: document.getElementById('change-location-btn'),
   main: document.getElementById('main-screen'),
 };
 
@@ -48,6 +49,7 @@ function showStatus(kind, message = 'Loading', { showToday = false } = {}) {
   status.screen.classList.toggle('is-error', kind === 'error');
   status.text.textContent = message;
   status.retry.hidden = kind !== 'error';
+  status.changeLocation.hidden = kind !== 'error';
   status.today.hidden = !showToday;
   status.main.hidden = true;
   status.screen.hidden = false;
@@ -65,6 +67,14 @@ status.retry.addEventListener('click', () => {
 status.today.addEventListener('click', () => {
   app.dateIndex = 0;
   refresh();
+});
+// Leave the error screen to search somewhere else. The sample fit shows meanwhile,
+// so no stale or missing weather is ever displayed.
+status.changeLocation.addEventListener('click', () => {
+  app.forecast = null;
+  app.dateIndex = 0;
+  refresh();
+  el.searchInput.focus();
 });
 
 /**
