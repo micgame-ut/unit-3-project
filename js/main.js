@@ -7,6 +7,7 @@ import { picksFor, withoutPastDates } from './variation.js';
 import { buildState, sampleState, forecastDates, localNow } from './state.js';
 import { render, onMotionPreferenceChange } from './render.js';
 import { hourLabel } from './rules.js';
+import { BACKGROUNDS } from './content.js';
 
 const app = {
   location: null,     // { name, lat, lon }
@@ -259,6 +260,63 @@ fitDialog.addEventListener('click', event => {
   if (event.target === fitDialog) fitDialog.close();
 });
 // Esc closes <dialog> natively
+
+// ---------- Info screen (req. 12) ----------
+// Shown in place of the main screen. The main screen is only hidden, never redrawn,
+// so going back returns to the same location, date, and window.
+const info = {
+  screen: document.getElementById('info-screen'),
+  open: document.getElementById('info-btn'),
+  back: document.getElementById('info-back'),
+  forget: document.getElementById('forget-btn'),
+  forgetStatus: document.getElementById('forget-status'),
+  scrollY: 0,
+};
+
+// Background photo credits come from the same list the backgrounds use
+document.getElementById('photo-credits').replaceChildren(...Object.values(BACKGROUNDS).map(photo => {
+  const li = document.createElement('li');
+  const link = document.createElement('a');
+  link.href = photo.url;
+  link.textContent = photo.title;
+  li.append(link, ` by ${photo.creator}, ${photo.license}.`);
+  return li;
+}));
+
+function openInfo() {
+  info.scrollY = window.scrollY;
+  info.forgetStatus.textContent = '';
+  status.main.hidden = true;
+  info.screen.hidden = false;
+  window.scrollTo(0, 0);
+  info.back.focus();
+}
+
+function closeInfo() {
+  info.screen.hidden = true;
+  status.main.hidden = false;
+  window.scrollTo(0, info.scrollY);
+  info.open.focus();
+}
+
+info.open.addEventListener('click', openInfo);
+info.back.addEventListener('click', closeInfo);
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !info.screen.hidden) closeInfo();
+});
+
+// Forget location (req. 4): clears the saved location and returns to the first-visit state
+info.forget.addEventListener('click', () => {
+  storage.remove(storage.KEYS.location);
+  app.location = null;
+  app.forecast = null;
+  app.dateIndex = 0;
+  el.locationName.textContent = '';
+  showMessage('');
+  refresh();
+  status.main.hidden = true; // stay on the info screen until the User goes back
+  info.forgetStatus.textContent = 'Location forgotten. This device no longer has a saved location.';
+});
 
 // ---------- Icon animation (req. 16) ----------
 document.getElementById('pause-btn').addEventListener('click', () => {

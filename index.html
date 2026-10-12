@@ -143,7 +143,73 @@
     </div>
   </dialog>
 
-  <!-- Info screen, shown in place of the main screen (checkpoint 9) -->
-  <section id="info-screen" class="info-screen" hidden></section>
+  <!-- Info screen (req. 12), shown in place of the main screen; back keeps the main screen's state -->
+  <div id="info-screen" class="info-screen" hidden>
+    <article class="info-page" aria-labelledby="info-title">
+      <button id="info-back" class="info-back" type="button">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4L6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+
+      <header class="info-header">
+        <h1 id="info-title">Info</h1>
+        <p class="info-creator">Michael Game, Creator</p>
+      </header>
+
+      <section aria-labelledby="info-weather">
+        <h2 id="info-weather">Weather data</h2>
+        <p>Forecasts and location search come from <a href="https://open-meteo.com/">Open-Meteo.com</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Place names in search come from <a href="https://www.geonames.org/">GeoNames</a> (CC BY 4.0) through Open-Meteo. When you tap "Use my location," the place name comes from <a href="https://www.bigdatacloud.com/">BigDataCloud</a>.</p>
+        <p>Recommendations are playful suggestions, not safety advice.</p>
+      </section>
+
+      <section aria-labelledby="info-how">
+        <h2 id="info-how">How recommendations work</h2>
+        <p>Only the hours you're out ("I'm out from ___ to ___") count. The outfit is picked from the warmest hourly "feels like" temperature in those hours.</p>
+        <table class="info-table">
+          <caption class="visually-hidden">Outfit categories</caption>
+          <thead><tr><th scope="col">Fit</th><th scope="col">Warmest feels-like</th><th scope="col">Basis</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Hot</th><td>90°F and up</td><td><a href="https://www.weather.gov/ama/heatindex">NWS heat index</a> "extreme caution" level; loose, light layers per <a href="https://www.weather.gov/safety/heat-during">NWS heat safety</a></td></tr>
+            <tr><th scope="row">Warm</th><td>75–89°F</td><td>Our judgment</td></tr>
+            <tr><th scope="row">Mild</th><td>60–74°F</td><td>Our judgment</td></tr>
+            <tr><th scope="row">Cool</th><td>45–59°F</td><td>Our judgment</td></tr>
+            <tr><th scope="row">Cold</th><td>Below 45°F</td><td>Our judgment for the cutoff; hat, scarf, gloves, and water-resistant coat and boots per <a href="https://www.cdc.gov/winter-weather/prevention/index.html">CDC winter weather</a></td></tr>
+          </tbody>
+        </table>
+        <p>Reminders show when any hour you're out meets the rule:</p>
+        <ul class="info-list">
+          <li><b>Umbrella:</b> rain chance 40% or more (our judgment).</li>
+          <li><b>Sunscreen:</b> UV index 3 or more (<a href="https://www.epa.gov/sunsafety/uv-index-scale-0">EPA UV Index</a>).</li>
+          <li><b>Water:</b> feels like 90°F or more (<a href="https://www.weather.gov/ama/heatindex">NWS heat index</a>, <a href="https://www.cdc.gov/heat-health/about/index.html">CDC heat health</a>).</li>
+          <li><b>Bundle up:</b> temperature 32°F or below (<a href="https://www.weather.gov/safety/cold-wind-chill-chart">NWS wind chill</a>, <a href="https://www.cdc.gov/winter-weather/prevention/index.html">CDC winter weather</a>).</li>
+          <li><b>Layer up:</b> feels-like range of 20°F or more while you're out (our judgment).</li>
+        </ul>
+        <p>Each date gets its own randomly picked outfit and reminder wording, which stay the same when you come back to that date.</p>
+      </section>
+
+      <section aria-labelledby="info-privacy">
+        <h2 id="info-privacy">Privacy</h2>
+        <ul class="info-list">
+          <li>No accounts, cookies, analytics, or API keys.</li>
+          <li>Your location is only requested when you tap "Use my location," and it's rounded to about 1&nbsp;km before it leaves your device.</li>
+          <li>Open-Meteo receives the city or ZIP you type, or your rounded location, to find the place and its forecast. Like most web services, it may log your IP address (<a href="https://open-meteo.com/en/terms">Open-Meteo terms</a>).</li>
+          <li>After "Use my location," BigDataCloud receives your rounded location to name your city, and may use it to improve its location data.</li>
+          <li>Saved only on this device: your last location, the outfit and wording picked for each date, and your usual hours out if you change them.</li>
+        </ul>
+        <button id="forget-btn" class="forget-btn" type="button">Forget location</button>
+        <p id="forget-status" class="forget-status" role="status"></p>
+      </section>
+
+      <section aria-labelledby="info-art">
+        <h2 id="info-art">Art credits</h2>
+        <ul class="info-list" id="art-credits">
+          <li>Character and outfit images generated with Google Gemini (Nano Banana 2) by Michael Game.</li>
+          <li>Weather icons: <a href="https://github.com/basmilius/weather-icons">Meteocons</a> by Bas Milius, MIT License.</li>
+        </ul>
+        <h3 class="info-subhead">Background photos (Wikimedia Commons)</h3>
+        <ul class="info-list" id="photo-credits"></ul>
+      </section>
+    </article>
+  </div>
 </body>
 </html>

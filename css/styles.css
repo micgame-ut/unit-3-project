@@ -376,3 +376,45 @@ select {
 @media (prefers-reduced-motion: reduce) {
   .status-screen.is-loading .sun-rays line { animation: none; opacity: 1; }
 }
+
+/* ---------- Info screen (req. 12) ----------
+   One readable column on a solid panel. On laptop it stays one column, centered, with
+   decorative side bars in the accent colors filling the extra width (spec.md). */
+.info-screen[hidden] { display: none; }
+.info-screen { min-height: 100vh; padding: var(--gap); }
+.info-page {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px 28px;
+}
+.info-back { display: inline-flex; align-items: center; gap: 4px; padding: 0 14px 0 8px; }
+.info-back svg { width: 20px; height: 20px; }
+.info-header h1 { margin: 16px 0 0; font-size: 2.25rem; line-height: 1.1; }
+.info-creator { margin: 4px 0 0; color: var(--text-muted); font-weight: 600; }
+.info-page h2 { margin: 28px 0 8px; font-size: 1.25rem; }
+.info-subhead { margin: 16px 0 6px; font-size: 1rem; }
+.info-page p { margin: 0 0 10px; }
+.info-page a { color: var(--accent); }
+.info-list { margin: 0 0 10px; padding-left: 1.2rem; display: grid; gap: 6px; }
+.info-table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 0.95rem; }
+.info-table th, .info-table td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+.info-table thead th { color: var(--text-muted); font-size: 0.85rem; }
+.forget-btn { border-color: var(--accent); color: var(--accent); background: transparent; }
+.forget-status { margin-top: 8px; font-weight: 600; }
+.forget-status:empty { display: none; }
+
+@media (min-width: 900px) {
+  .info-screen {
+    padding: 40px var(--gap);
+    /* Side bars: accent-tinted stripes either side of the 720px column */
+    background:
+      linear-gradient(90deg,
+        color-mix(in srgb, var(--accent) 22%, transparent) 0 calc(50% - 400px),
+        transparent calc(50% - 400px) calc(50% + 400px),
+        color-mix(in srgb, var(--accent) 22%, transparent) calc(50% + 400px) 100%);
+  }
+  .info-page { padding: 24px 36px 36px; }
+}

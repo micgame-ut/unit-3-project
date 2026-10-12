@@ -73,7 +73,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 - [x] **5. Main screen, phone:** character card, frosted icon card with pause, day name, Now and Forecast lines, reminders, written recommendation, Open-Meteo credit, all drawn from the state. *Result:* req. 6, 7, and 14 (phone) pass at 320px and 390px. *Verified by Developer, 2026-10-11.*
 - [x] **6. Controls:** date picker (7 dates), out-window control, See the fit overlay. *Result:* req. 5, 10, 11, and 15 pass. *Verified by Developer, 2026-10-11.*
 - [x] **7. Laptop layout:** two columns from 900px up. *Result:* req. 14 passes at 1280px+. *Verified by Developer, 2026-10-11 (columns centered, location top right, weather backgrounds added).*
-- [ ] **8. States:** loading sun, error image, location denied, first-visit sample fit, "No US location found." *Result:* each req. 13 state triggers on purpose.
+- [x] **8. States:** loading sun, error image, location denied, first-visit sample fit, "No US location found." *Result:* each req. 13 state triggers on purpose. *Verified by Developer, 2026-10-11 (Change location added; screenshots in reference/state-*.jpg).*
 - [ ] **9. Info screen:** all sections, Forget location, and back without losing state. *Result:* req. 12 and 18 pass.
 - [ ] **10. Accessibility and privacy pass:** keyboard, focus, alt text, live region, contrast, reduced motion. *Result:* req. 16 and 17 checks pass.
 - [ ] **11. Finish art:** generate, compress, and add Cool 3 and Cold 1–3; remove the fallback. *Result:* all 15 outfits show their own images.
