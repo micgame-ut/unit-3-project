@@ -30,6 +30,43 @@ function showMessage(text) {
   el.message.textContent = text;
 }
 
+// ---------- Loading and error states (req. 13) ----------
+const status = {
+  screen: document.getElementById('status-screen'),
+  text: document.getElementById('status-text'),
+  retry: document.getElementById('retry-btn'),
+  today: document.getElementById('today-btn'),
+  main: document.getElementById('main-screen'),
+};
+
+/**
+ * Shows the full-screen loading or error state in place of the main screen.
+ * kind: 'loading' | 'error'. showToday adds "Back to today" (missing data on a later date).
+ */
+function showStatus(kind, message = 'Loading', { showToday = false } = {}) {
+  status.screen.classList.toggle('is-loading', kind === 'loading');
+  status.screen.classList.toggle('is-error', kind === 'error');
+  status.text.textContent = message;
+  status.retry.hidden = kind !== 'error';
+  status.today.hidden = !showToday;
+  status.main.hidden = true;
+  status.screen.hidden = false;
+  if (kind === 'error') status.retry.focus();
+}
+
+function hideStatus() {
+  status.screen.hidden = true;
+  status.main.hidden = false;
+}
+
+status.retry.addEventListener('click', () => {
+  if (app.location) setLocation(app.location);
+});
+status.today.addEventListener('click', () => {
+  app.dateIndex = 0;
+  refresh();
+});
+
 /**
  * Rebuilds the recommendation state from the current selections and renders it.
  * Called after any change to location, date, or window (req. 7).
@@ -52,6 +89,13 @@ function refresh() {
     });
   }
   draw();
+
+  // Missing data for these hours uses the error layout (spec.md, States)
+  if (app.state.missing) {
+    showStatus('error', 'Some forecast data is missing for these hours.', { showToday: app.dateIndex !== 0 });
+  } else {
+    hideStatus();
+  }
 }
 
 function draw() {
@@ -70,14 +114,21 @@ async function setLocation(place) {
   app.location = place;
   storage.save(storage.KEYS.location, place);
   el.locationName.textContent = place.name;
+
+  // Show the loading sun only if the request is slow, so fast loads don't flash
+  const loadingTimer = setTimeout(() => showStatus('loading'), 250);
   try {
     app.forecast = await fetchForecast(place.lat, place.lon);
-    console.info('[app] forecast loaded', place.name, app.forecast.timezone, app.forecast.hourly.time.length, 'hours');
   } catch (err) {
+    clearTimeout(loadingTimer);
     app.forecast = null;
-    showMessage("Weather service isn't responding. Try again in a minute.");
+    showStatus('error', navigator.onLine
+      ? "The weather service isn't responding right now."
+      : "You're offline. Connect to the internet to get the forecast.");
     console.warn('[app] forecast failed', err);
+    return;
   }
+  clearTimeout(loadingTimer);
   refresh();
 }
 
@@ -208,5 +259,10 @@ onMotionPreferenceChange(draw);
 
 // ---------- Start: restore the saved location (req. 4) ----------
 const saved = storage.load(storage.KEYS.location);
-if (saved) setLocation(saved);
-else refresh();
+if (saved) {
+  // Start on the loading sun rather than flashing the empty main screen
+  showStatus('loading');
+  setLocation(saved);
+} else {
+  refresh();
+}

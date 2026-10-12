@@ -105,6 +105,30 @@
     <p id="announcer" class="visually-hidden" aria-live="polite"></p>
   </main>
 
+  <!-- Loading and error states (req. 13): shown in place of the main screen -->
+  <section id="status-screen" class="status-screen" hidden>
+    <svg id="status-sun" class="status-sun" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="sun-core" cx="60" cy="60" r="17"/>
+      <g class="sun-rays">
+        <line x1="60" y1="8" x2="60" y2="26"/>
+        <line x1="96.8" y1="23.2" x2="84" y2="36"/>
+        <line x1="112" y1="60" x2="94" y2="60"/>
+        <line x1="96.8" y1="96.8" x2="84" y2="84"/>
+        <line x1="60" y1="112" x2="60" y2="94"/>
+        <line x1="23.2" y1="96.8" x2="36" y2="84"/>
+        <line x1="8" y1="60" x2="26" y2="60"/>
+        <line x1="23.2" y1="23.2" x2="36" y2="36"/>
+      </g>
+      <!-- Cloud covers the sun in the error variant -->
+      <path class="sun-cloud" d="M44 98h52a16 16 0 0 0 0-32 22 22 0 0 0-42-6 18 18 0 0 0-10 38z"/>
+    </svg>
+    <p id="status-text" class="status-text" role="status">Loading</p>
+    <div class="status-actions">
+      <button id="retry-btn" class="retry-btn" type="button" hidden>Try again</button>
+      <button id="today-btn" type="button" hidden>Back to today</button>
+    </div>
+  </section>
+
   <!-- See the fit (req. 11): closes on tap outside, the close button, or Esc -->
   <dialog id="fit-dialog" class="fit-dialog" aria-labelledby="fit-title">
     <div class="fit-box">

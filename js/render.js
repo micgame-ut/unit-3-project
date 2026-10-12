@@ -21,6 +21,9 @@ function dayParts(date, isToday) {
 }
 
 export function render(state, { paused = false } = {}) {
+  // Missing data has no recommendation to draw; main.js shows the error screen instead
+  if (state.missing) return;
+
   const still = iconsStill(paused);
 
   // Character card and sample label
