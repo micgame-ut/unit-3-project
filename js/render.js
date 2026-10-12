@@ -1,7 +1,7 @@
 // Draws every main-screen output from the one recommendation state (req. 7).
 // Nothing here reads weather data directly; it only reads `state`.
 
-import { WEATHER_ICONS, iconPath } from './content.js';
+import { WEATHER_ICONS, BACKGROUNDS, iconPath } from './content.js';
 
 const $ = id => document.getElementById(id);
 
@@ -35,6 +35,10 @@ export function render(state, { paused = false } = {}) {
   pauseBtn.setAttribute('aria-pressed', String(paused));
 
   const hasWeather = !state.isSample && !state.missing;
+
+  // Full-screen background follows the window icon; the sample fit is a sunny day
+  const background = BACKGROUNDS[hasWeather ? state.icon : 'clear'];
+  $('backdrop').style.backgroundImage = `url("${background.file}")`;
 
   // Frosted icon card: window weather icon and category
   $('icon-card').hidden = !hasWeather;

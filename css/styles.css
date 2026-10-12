@@ -8,6 +8,7 @@
   --on-accent: #ffffff;
   --border: #d8d2c8;
   --frost: rgba(255, 255, 255, 0.72);
+  --scrim: rgba(246, 243, 238, 0.62);
   --radius: 16px;
   --gap: 16px;
   --tap: 44px; /* minimum tap target, req. 15 */
@@ -25,6 +26,7 @@
     --on-accent: #1f2328;
     --border: #3a3f47;
     --frost: rgba(34, 37, 43, 0.72);
+    --scrim: rgba(22, 24, 28, 0.66);
   }
 }
 
@@ -37,6 +39,7 @@
   --on-accent: #1f2328;
   --border: #3a3f47;
   --frost: rgba(34, 37, 43, 0.72);
+  --scrim: rgba(22, 24, 28, 0.66);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -308,4 +311,22 @@ select {
     border-radius: var(--radius);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   }
+}
+
+/* ---------- Full-screen weather background (Developer, 2026-10-11) ----------
+   Photo is blurred slightly and covered by a scrim in the page color, so text that
+   sits directly on it (day name, out window, location name) keeps its contrast. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg) center / cover no-repeat;
+  filter: blur(3px);
+  transform: scale(1.04); /* hides the blurred edges */
+}
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
 }

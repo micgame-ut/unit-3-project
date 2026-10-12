@@ -105,6 +105,19 @@ export const WEATHER_ICONS = {
   snow: { file: 'snow', word: 'Snow' },
 };
 
+// Full-screen backgrounds, one per window icon (Developer, 2026-10-11).
+// Photos from Wikimedia Commons, licenses checked there on 2026-10-11; candidates kept in
+// reference/background-candidates.html. CC BY photos must be credited on the info screen.
+export const BACKGROUNDS = {
+  clear: { file: 'img/bg/clear.jpg', title: 'Georgia College and State University south campus (2023)', creator: 'Motorblade7', license: 'CC0', url: 'https://commons.wikimedia.org/w/index.php?curid=141397578' },
+  partly: { file: 'img/bg/partly.jpg', title: 'Clouds over Lyman Hall, Syracuse University (2014)', creator: 'Michael Scialdone', license: 'CC BY 2.0', url: 'https://commons.wikimedia.org/w/index.php?curid=157896639' },
+  cloudy: { file: 'img/bg/cloudy.jpg', title: '500px photo (128017399)', creator: 'Willem V', license: 'CC0', url: 'https://commons.wikimedia.org/wiki/File:500px_photo_(128017399).jpeg' },
+  fog: { file: 'img/bg/fog.jpg', title: 'Fog on Campus', creator: 'Dennis Sylvester Hurd', license: 'CC0', url: 'https://commons.wikimedia.org/w/index.php?curid=87618285' },
+  rain: { file: 'img/bg/rain.jpg', title: 'Cornell rainy north campus from bridge', creator: 'Notyourbroom', license: 'CC BY 3.0', url: 'https://commons.wikimedia.org/w/index.php?curid=5955003' },
+  storm: { file: 'img/bg/storm.jpg', title: 'Hailstone-generating storm system (4 July 2010)', creator: 'James St. John', license: 'CC BY 2.0', url: 'https://commons.wikimedia.org/w/index.php?curid=153990871' },
+  snow: { file: 'img/bg/snow.jpg', title: 'Rutgers University snow in February', creator: 'Tomwsulcer', license: 'CC0', url: 'https://commons.wikimedia.org/w/index.php?curid=31298044' },
+};
+
 /** Animated icon path, or the still version for reduced motion / paused. */
 export function iconPath(file, still) {
   return still ? `art/icons/static/${file}.svg` : `art/icons/${file}.svg`;

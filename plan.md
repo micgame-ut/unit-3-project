@@ -109,6 +109,8 @@ Before testing, record the purpose, a few realistic tasks, non-leading prompts, 
 
 Record material plan changes and why they were made.
 
+- **2026-10-11, during checkpoint 7 (Developer):** laptop location search moved to the top of the right column (it fell below the fold under the card), and the two laptop columns centered against each other vertically. Added a full-screen weather background photo, one per weather icon, from CC0 / CC BY Wikimedia Commons images; the 3 CC BY photos join the info-screen credits in checkpoint 9. Spec updated (Screen designs, Assets).
+
 ## Saving transcripts
 
 At the end of planning, ask the Developer to enter `save transcript`. When directed, save the complete conversation as `transcripts/plan-YYYY-MM-DD_HHMMSS.md`, label chat messages `Developer` and `Agent`, and confirm the saved path.

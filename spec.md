@@ -54,6 +54,8 @@ Draw every proposed screen by hand, in both phone and laptop layouts, on paper, 
 - **Icon pause control:** on the frosted card. **Open-Meteo credit:** in the extra-info box.
 - **Laptop (revised 2026-10-11):** left column with the day name, date picker, and character card; right column with location search at the top, then weather summary, See the fit, out window, extra info. The sketch put location under the card, but there it fell below the fold on a laptop screen, so the Developer moved it to the top of the right column.
 
+**Full-screen weather background (Developer, 2026-10-11):** a photo behind the whole main screen, phone and laptop, matching the window's weather icon (clear, partly cloudy, cloudy, fog, rain, storm, snow). It is lightly blurred under a tint in the page color so text placed directly on it stays readable. The sample fit uses the clear background.
+
 **"See the fit":** opens as an overlay over the character; tapping outside the box closes it.
 
 **Info screen (Developer decisions):** a back button at the top left returns to the main screen. Sections, top to bottom, as sketched:
@@ -61,7 +63,7 @@ Draw every proposed screen by hand, in both phone and laptop layouts, on paper, 
 - **Weather data:** Open-Meteo, with CC BY 4.0 attribution and the GeoNames credit for location search. Device-location names: BigDataCloud.
 - **How recommendations work:** the five categories and their apparent-temperature bands, noting which breakpoints are sourced (NWS, CDC) and which are design judgments; the reminder rules with linked sources.
 - **Privacy:** the confirmed approach in `research.md` (no accounts, cookies, analytics, or API keys; location requested only on tap; coordinates rounded to about 1 km; only rounded coordinates or the typed city sent to Open-Meteo, which may log IP addresses; after "Use my location," rounded coordinates also sent to BigDataCloud to name the city, which may use them to improve its location data; last location, per-date picks, and any changed out window saved in `localStorage`), plus the **Forget location** button.
-- **Art credits:** "Character and outfit images generated with Google Gemini (Nano Banana 2) by Michael Game. Weather icons: Meteocons by Bas Milius, MIT License."
+- **Art credits:** "Character and outfit images generated with Google Gemini (Nano Banana 2) by Michael Game. Weather icons: Meteocons by Bas Milius, MIT License." Plus the background photos: each photo's title, creator, and license with a link to its Commons page (required for the CC BY ones; listed for all).
 - **Laptop:** the same single-column format, centered, with decorative side bars filling the extra width. No separate sketch needed.
 - Only User-facing content appears here; Client-facing notes (such as Open-Meteo's non-commercial free tier) are left out.
 
@@ -237,6 +239,7 @@ List every art and graphical asset: the character, each outfit variation, icons,
 | Sample fit | reuses Warm 1 | First visit, location denied | (reuses character image) | — | — |
 | Weather icons: clear, partly cloudy, cloudy, fog, rain, storm, snow | 7 | Frosted icon card; "Now" line | SVG, animated (`art/icons/`) + static (`art/icons/static/`) | Licensed, Meteocons Fill | MIT, © Bas Milius; `LICENSE-meteocons.txt` shipped with the icons |
 | Reminder icons: umbrella, UV, raindrop, thermometer-colder, thermometer-warmer | 5 | Reminders in the extra-info box | SVG, animated + static | Licensed, Meteocons Fill | Same as above |
+| Weather backgrounds: clear, partly cloudy, cloudy, fog, rain, storm, snow (added 2026-10-11) | 7 | Full-screen behind the main screen | JPEG, 1600px wide (`img/bg/`) | Licensed photos from Wikimedia Commons; candidates in `reference/background-candidates.html` | CC0: clear (Motorblade7), cloudy (Willem V), fog (Dennis Sylvester Hurd), snow (Tomwsulcer). CC BY, credited on the info screen: partly cloudy (Michael Scialdone, CC BY 2.0), rain (Notyourbroom, CC BY 3.0), storm (James St. John, CC BY 2.0). Licenses checked on Commons 2026-10-11 |
 | Loading sun (rays light up one by one; full brightness, no animation, under reduced motion) | 1 | Loading state | Inline SVG + CSS animation | Created | Original; no credit needed |
 | Error image (variant of the loading sun; dimmed or cloud-covered, chosen during build) | 1 | Error state | Inline SVG | Created | Original; no credit needed |
 | Info-screen side bars | — | Info screen, laptop | CSS (colors, no image) | Created | — |
