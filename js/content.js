@@ -32,25 +32,12 @@ export const OUTFITS = {
   ],
 };
 
-// Images made so far (plan.md, Missing art). Until the rest exist, a missing outfit
-// borrows the first existing image in its category, or Cool 1 for Cold.
-// Remove this fallback once all 15 outfits have art (checkpoint 11).
-const MADE = new Set(['hot-1', 'hot-2', 'hot-3', 'warm-1', 'warm-2', 'warm-3',
-  'mild-1', 'mild-2', 'mild-3', 'cool-1', 'cool-2']);
-
-function imageId(category, number) {
-  const id = `${category}-${number}`;
-  if (MADE.has(id)) return id;
-  const sibling = [1, 2, 3].map(n => `${category}-${n}`).find(x => MADE.has(x));
-  return sibling || 'cool-1';
-}
-
 /** Outfit details for a category and outfit number (1-3). */
 export function outfit(category, number) {
   const { look, layer } = OUTFITS[category][number - 1];
-  const img = imageId(category, number);
+  const img = `${category}-${number}`;
   return {
-    id: `${category}-${number}`,
+    id: img,
     name: `${CATEGORY_LABELS[category]} ${number}`,
     look,
     layer,

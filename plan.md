@@ -47,7 +47,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 
 **Data flow:** location change → one Open-Meteo request (cached) → date and window pick the hours → `rules.js` returns category, reminders, icon → `variation.js` adds the outfit and wordings → `state.js` returns the recommendation state → `render.js` updates every output together and announces the change to screen readers.
 
-**Missing art (Developer, 2026-10-11):** build continues while Cool 3 and Cold 1–3 are still to make. Until then, a missing variation falls back to one that exists in the same category, and Cold uses a temporary placeholder. The fallback is removed once all 30 images are in.
+**Missing art (Developer, 2026-10-11):** build continues while Cool 3 and Cold 1–3 are still to make. Until then, a missing variation falls back to one that exists in the same category, and Cold uses a temporary placeholder. The fallback is removed once all 30 images are in. *(Removed 2026-10-12, checkpoint 11.)*
 
 **Main risks**
 - **Hour handling:** the window crosses midnight and uses the location's time zone, not the device's. Mitigation: request `timezone=auto`, index hours by the API's local time strings, and test the req. 10 examples on the test page.
@@ -65,7 +65,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 
 ### Build
 
-- [ ] Create or source the assets listed in `spec.md`, starting early (22 of 30 images done; Cool 3 and Cold 1–3 remain)
+- [ ] Create or source the assets listed in `spec.md`, starting early (30 of 30 images done 2026-10-12; Cool 3 approved by Developer, Cold 1–3 awaiting review)
 - [x] **1. Scaffold:** `index.html`, CSS tokens, module files, `serve.ps1`, and `compress-images.ps1`. *Result:* the page loads at localhost with the compressed images in `img/`. *Verified by Developer, 2026-10-11.*
 - [x] **2. Rules engine:** `rules.js` (out window, category, reminders, window icon) and the browser test page. *Result:* every boundary case in req. 8 and 10 passes on `tests.html`. *Verified by Developer, 2026-10-11 (52 of 52 tests pass).*
 - [x] **3. Location and weather data:** US-only search with a pick list, "Use my location" with rounding and BigDataCloud naming, the Open-Meteo forecast request, and the saved last location. *Result:* req. 1–4 checks pass in the network and storage panels. *Verified by Developer, 2026-10-11, including "Use my location."*
@@ -76,7 +76,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 - [x] **8. States:** loading sun, error image, location denied, first-visit sample fit, "No US location found." *Result:* each req. 13 state triggers on purpose. *Verified by Developer, 2026-10-11 (Change location added; screenshots in reference/state-*.jpg).*
 - [x] **9. Info screen:** all sections, Forget location, and back without losing state. *Result:* req. 12 and 18 pass. *Verified by Developer, 2026-10-11.*
 - [x] **10. Accessibility and privacy pass:** keyboard, focus, alt text, live region, contrast, reduced motion. *Result:* req. 16 and 17 checks pass. *Verified by Developer, 2026-10-11.*
-- [ ] **11. Finish art:** generate, compress, and add Cool 3 and Cold 1–3; remove the fallback. *Result:* all 15 outfits show their own images.
+- [ ] **11. Finish art:** generate, compress, and add Cool 3 and Cold 1–3; remove the fallback. *Result:* all 15 outfits show their own images. *Agent check, 2026-10-12:* fallback removed from `content.js`; 77 of 77 tests pass; all 30 image paths are distinct and load; Cold 2 and its fit shown in the app for Utqiagvik, AK.
 - [ ] Use the approved screen drawings to guide layout and interaction work
 - [ ] Keep one recommendation state driving every visual and written output
 - [ ] Test and fix each checkpoint against the specification before starting the next

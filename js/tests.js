@@ -186,7 +186,8 @@ const later = buildState({ location: austinLoc, forecast: fc, dateIndex: 3, usua
 check('forecast date has no Now line', later.now, null);
 check('forecast date uses 7am–7pm and its own weather', [later.windowText, later.category], ['7am–7pm', 'cold']);
 check('same outfit number carries to the new category', later.outfit.id, 'cold-2');
-check('Cold image falls back until its art exists', later.outfit.character, 'img/cool-1-character.jpg');
+check('Cold outfit uses its own images', [later.outfit.character, later.outfit.fit],
+  ['img/cold-2-character.jpg', 'img/cold-2-fit.jpg']);
 
 const swingFc = fakeForecast();
 swingFc.hourly.apparent_temperature[15] = 60; // 3pm feels 60, 10pm feels 92: a 32° swing, Hot
