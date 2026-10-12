@@ -1,0 +1,333 @@
+commit 72b2b00d3c8e64b80dc1013a4ff261da63de1aab
+Date:   2026-10-12 15:55:41 -0500
+
+Save build session transcript (checkpoint 11)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit f94b68460837f6396bc6415b0963fba16993971b
+Date:   2026-10-12 15:53:58 -0500
+
+Mark checkpoint 11 and assets verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit e6583f9d303b9d6efe9f0cd02887858d378e3a6c
+Date:   2026-10-12 15:52:43 -0500
+
+Add Cool 3 and Cold 1-3 art; remove missing-art fallback (checkpoint 11)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 5e93f3e26725ea1458ff398775442524963086b0
+Date:   2026-10-11 19:59:21 -0500
+
+Save build session transcript (art through deployment)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 9d1f354589c50642a275eb37c73a334691d64529
+Date:   2026-10-11 19:56:32 -0500
+
+Mark deployment verified on a real phone
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit fbb0ad66a3ca2caa12bcf09ec3a588012753591e
+Date:   2026-10-11 19:52:26 -0500
+
+Record live URL and run/test/deploy steps
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 030fae47346ca5e71b83204afa56ac1ddde5d84f
+Date:   2026-10-11 19:48:41 -0500
+
+Serve files as-is on GitHub Pages (.nojekyll)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 2b35be6e14588a83da18d2e6f5bc8ad0d1750f66
+Date:   2026-10-11 19:47:07 -0500
+
+Mark checkpoint 10 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 1d57ec35c672389a35677746f3540348d996054d
+Date:   2026-10-11 19:43:49 -0500
+
+Accessibility and privacy pass (checkpoint 10)
+
+- Contrast, worst case over any background photo pixel: text on the photo
+  and frosted card now uses the main text color only (gray/orange there
+  dropped to 1.8-3.2:1); dark tint 0.66 -> 0.72; lowest pair now 4.9:1
+- Focus ring uses the main text color (orange fell to 1.8:1 on photos)
+- Checked: keyboard Tab/Enter, accessible names, alt text, live region,
+  network hosts, and storage keys (only fcw.location/picks/window)
+- plan.md: checkpoint 9 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 4bc5adc105c31eb1e9e12e6e203595755ef955bd
+Date:   2026-10-11 19:39:46 -0500
+
+Add info screen with credits, privacy, and Forget location (checkpoint 9)
+
+- Info screen in place of the main screen: creator, weather data and
+  attribution, how recommendations work (bands, reminder rules, sources),
+  privacy practices, art credits including background photos
+- Back (and Esc) returns to the same location, date, window, and scroll
+- Forget location clears only the saved location; back shows the sample
+- Laptop: one centered column with accent side bars
+- reference/state-*.jpg: screenshots of loading, error, denied, missing
+  data, and the info screen
+- plan.md: checkpoint 8 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 15d1564ddd20ec62f090ce551b8dd6a26d89f9a2
+Date:   2026-10-11 19:33:19 -0500
+
+Add Change location to the error screen
+
+Leaves the error screen for the sample fit with the cursor in the search
+box, so a failing or incomplete location is never a dead end.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 17f587017b0eac3825eb51539c7935afc596c404
+Date:   2026-10-11 19:30:26 -0500
+
+Add loading, error, missing-data, and denied states (checkpoint 8)
+
+- Status screen in place of the main screen: loading sun whose rays light
+  up in turn (still under reduced motion), error variant with a dimmed sun
+  behind a cloud and Try again; missing data adds Back to today
+- Loading shows after 250ms (no flash on fast loads); on startup with a
+  saved location it shows right away
+- Offline gets its own message; denied location keeps the current
+  location, or shows the sample fit on a first visit
+- Fix: missing data crashed the renderer before the error screen showed
+- plan.md: checkpoint 7 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 2321df636e17a9207d853c45b2c5f133ef9434c8
+Date:   2026-10-11 19:22:03 -0500
+
+Add full-screen weather background photos
+
+- img/bg/: 7 Wikimedia Commons photos (4 CC0, 3 CC BY), 1600px, ~1.6 MB total
+- Background follows the window icon; blurred under a tint in the page
+  color so text on it stays readable; sample fit uses clear
+- content.js: BACKGROUNDS with title, creator, license, and source link
+- reference/background-candidates.html: all candidates and the picks
+- spec.md (Screen designs, Assets, Art credits) and plan.md Revisions
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit a15ed9cff7e8ef84a04256a613c0f67a9849e5c9
+Date:   2026-10-11 19:04:04 -0500
+
+Center laptop columns vertically; hide empty pick list
+
+- index.html: areas grouped into left and right column wrappers (source
+  order now follows the laptop columns)
+- Phone: wrappers use display: contents and CSS order keeps the spec's
+  phone order; laptop: two flex columns centered against each other
+- Fix: the hidden pick list showed as an empty bar on laptop
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 117b9929fec0dfff98a127ea099f1a2ee4d3fb74
+Date:   2026-10-11 18:59:21 -0500
+
+Add laptop two-column layout (checkpoint 7)
+
+- From 900px: left column day, date picker, character card (sized to the
+  screen height); right column location, weather, See the fit, out
+  window, extra info
+- Location moved to the top of the right column so it's visible without
+  scrolling (Developer, 2026-10-11; spec.md Screen designs updated)
+- Pick list floats as a dropdown on laptop; closes on Esc or outside click
+- See the fit moved into its own area so it can sit in the right column
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 53e5ea01523f0163bd748885f5077042c0c8afa5
+Date:   2026-10-11 18:55:15 -0500
+
+Name device locations outside city limits by county; checkpoint 6 verified
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit d96d331c5a7211a8f4a6effb264bc1f68d85a82e
+Date:   2026-10-11 18:50:29 -0500
+
+Add date picker, out-window control, and See the fit (checkpoint 6)
+
+- 7 day buttons (aria-pressed), scroll inside the row only below ~360px
+- "I'm out from ___ to ___" native selects; a change saves the usual
+  window, editing only the touched field (not today's trimmed display)
+- See the fit <dialog>: closes on backdrop click, close button, or Esc
+- --on-accent token: dark text on the light dark-mode accent (contrast)
+- plan.md: checkpoint 5 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 18fafe9d586dbd0591de161d5151376da3356e5e
+Date:   2026-10-11 18:29:16 -0500
+
+Render the phone main screen from the recommendation state (checkpoint 5)
+
+- js/render.js: character, frosted icon card, day, Now and Forecast lines,
+  written recommendation, reminders, screen-reader announcement, sample state
+- Icon pause button (44x44, aria-pressed); reduced motion uses still icons
+- Layout fixes: no sideways scroll at 320px, credit links 44px tall
+- plan.md: checkpoint 4 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 2e67a90a5781e3df41e52d46736bd49b182e30c6
+Date:   2026-10-11 18:22:25 -0500
+
+Add recommendation state and per-date picks (checkpoint 4)
+
+- js/content.js: 15 outfits (look, alt text, outer layer), reminder
+  wordings, icon files; temporary image fallback for Cool 3 and Cold
+- js/variation.js: outfit and wordings picked independently per date,
+  saved, past dates dropped on load
+- js/state.js: one recommendation state from location, date, window,
+  forecast, and picks; sample state for first visit
+- main.js: refresh() rebuilds the state on every change
+- tests: 77 of 77 pass (picks, state consistency, missing data)
+- plan.md: checkpoint 3 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit a7091996f41c0a00714b0907371f77e89e92e8fb
+Date:   2026-10-11 18:05:17 -0500
+
+Add location search, device location, and forecast fetch (checkpoint 3)
+
+- js/weather.js: US-only Open-Meteo geocoding (ZIP or city, alternate-name
+  matches dropped), forecast request, BigDataCloud naming, 2-decimal rounding
+- js/storage.js: guarded localStorage access with fcw.* keys
+- index.html, main.js: search form, pick list, "Use my location" on tap
+  only, saved last location restored on load
+- spec.md: note BigDataCloud's redirect to api-bdc.io for req. 17
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit b840f2b84d3b1757caad3789f17fd604af37da5f
+Date:   2026-10-11 18:02:58 -0500
+
+Record app name; mark checkpoints 1-2 verified by Developer
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit b6196d22c5032176960c689789e86cb33aa9d33e
+Date:   2026-10-11 17:56:43 -0500
+
+Add rules engine and browser tests (checkpoint 2)
+
+- js/rules.js: out window (defaults, saved window, midnight crossing,
+  last-date cut-off), category bands, reminders, window icon
+- tests.html + js/tests.js: 52 cases from spec req. 8 and 10, all passing
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 5b4f10f26ba31e47ac1166ea33df653c2ae15871
+Date:   2026-10-11 17:55:11 -0500
+
+Approve plan; scaffold app (checkpoint 1)
+
+- plan.md: approach, 11 build checkpoints, spec and plan approvals
+- index.html, css/styles.css, js/main.js: page shell with phone areas
+- scripts/serve.ps1: local preview server on localhost:8000
+- scripts/compress-images.ps1: 640px web copies in img/ (12 MB -> 1.3 MB)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 123a8afb122a75fb9da1784fadda9a23c02cfa8a
+Date:   2026-10-11 17:43:04 -0500
+
+Add Warm 3 through Cool 2 art; record outfit list and batch notes
+
+- art/: Warm 3, Mild 1-3, Cool 1-2 character and fit images (848x1264)
+- spec.md: Content variation lists all 15 outfits with art status (22 of 30)
+- research.md: batch note on eye drift, the eye-only edit fix, duplicate
+  items in fits, and the Chrome download workaround
+- transcripts/: build session transcript
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit c8e6d73a1d6e08a4bff021e95f1df2a7b0708a6a
+Date:   2026-10-05 21:48:39 -0500
+
+Complete and approve specification; add screen sketches and transcripts
+
+Spec: goal with four user stories, screen designs and states, 19 requirements
+with acceptance checks, recommendation state and data flow, content variation,
+assets, and out of scope. Research: user story 4 and privacy revisions
+(BigDataCloud reverse geocoding, rounded coordinates, saved out window).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 2869397f8cfecfe6207b099873110114db7ed4b3
+Date:   2026-10-05 16:56:15 -0500
+
+Add accessibility, privacy, and AI-art sources; confirm privacy approach and art credit
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 1ea87d4ee8f7a26153ceb7b997328d56d599cdb2
+Date:   2026-10-05 16:36:59 -0500
+
+Complete and approve research; add reference images and first art batch
+
+- Move template files to the repo root
+- research.md: context of use, user stories, 10 reference images,
+  weather/technical sources, decisions, art tests, approval
+- plan.md: mark research approved (Developer, 2026-10-05)
+- reference/: reference screenshots and OpenArt/Gemini art tests
+- art/: Gemini 3D characters and 2D fits (Hot 1-3, Warm 1-2),
+  Meteocons Fill icons (animated + static) with MIT license
+- transcripts/: research session transcript
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+----------------------------------------
+commit 504d140e642435d9267e3e5d881ab1d54c58e087
+Date:   2026-09-28 16:12:25 -0500
+
+Initial project files
+
+----------------------------------------
