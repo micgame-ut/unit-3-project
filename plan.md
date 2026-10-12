@@ -81,7 +81,7 @@ Summarize the structure, data flow, dependencies, task order, and main risks.
 - [ ] Keep one recommendation state driving every visual and written output
 - [ ] Test and fix each checkpoint against the specification before starting the next
 - [ ] Commit meaningful working checkpoints
-- [ ] Deploy to a public HTTPS URL: deployed 2026-10-11 to https://micgame-ut.github.io/unit-3-project/ (repo made public by the Developer for GitHub Pages); awaiting Developer check on a real phone and laptop
+- [x] Deploy to a public HTTPS URL: deployed 2026-10-11 to https://micgame-ut.github.io/unit-3-project/ (repo made public by the Developer for GitHub Pages). *Verified by Developer on a real phone, 2026-10-11; laptop checked by Agent on the live site.*
 
 ### Verify and revise
 
