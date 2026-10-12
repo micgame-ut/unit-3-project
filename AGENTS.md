@@ -46,4 +46,10 @@ When the Developer directs the Agent to save the transcript, save the entire cur
 
 # Project
 
-Fill in as the project takes shape: how to run it locally, how to test it, and any commands or structure that aren't obvious from the code.
+Fit Check Weather: plain HTML, CSS, and JavaScript modules; no build step or installs.
+
+- **Live site:** https://micgame-ut.github.io/unit-3-project/ (GitHub Pages from `main`, repo root; every push to `main` redeploys in about a minute).
+- **Run locally:** `powershell -ExecutionPolicy Bypass -File scripts/serve.ps1`, then open http://localhost:8000/ (localhost counts as secure, so "Use my location" works).
+- **Rule tests:** with the server running, open http://localhost:8000/tests.html; it should say all tests passed.
+- **Images:** originals live in `art/`; after adding or changing one, run `powershell -ExecutionPolicy Bypass -File scripts/compress-images.ps1` to refresh the web copies in `img/`. Background photos are already web-sized in `img/bg/`.
+- **Structure:** `js/rules.js` (pure rules), `content.js` (outfits, wordings, icons, backgrounds), `weather.js` (network), `variation.js` (per-date picks), `state.js` (one recommendation state), `render.js` (draws it), `main.js` (wiring), `storage.js` (all `localStorage`).
